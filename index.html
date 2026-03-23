@@ -202,8 +202,8 @@
 
 
     /* ── SURCHARGE BANNER ─────────────────────────────────────────── */
-    #surcharge-banner { position: fixed; bottom: -200px; left: 0; right: 0; z-index: 900; background: #1C1A00; border-top: 2px solid rgba(249,168,37,0.4); padding: 12px 36px; pointer-events: none; opacity: 0; transition: bottom 0.3s ease, opacity 0.3s ease; box-shadow: 0 -4px 24px rgba(0,0,0,0.5); }
-    #surcharge-banner.visible { bottom: 0; opacity: 1; pointer-events: auto; }
+    #surcharge-banner { display: none; background: #1C1A00; border-top: 2px solid rgba(249,168,37,0.4); padding: 16px 36px; }
+    #surcharge-banner.visible { display: block; }
     .sb-inner { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; }
     .sb-title { font-size: 12px; font-weight: 700; color: var(--amber-txt); flex-basis: 100%; margin-bottom: 4px; }
     .sb-item { font-size: 12px; color: rgba(255,213,79,0.85); display: flex; align-items: baseline; gap: 5px; }
@@ -278,45 +278,11 @@
 </nav>
 
 
-<!-- SURCHARGE BANNER (shown when toggle is ON) -->
-<div id="surcharge-banner">
-  <div class="sb-inner">
-    <div class="sb-title">Surcharge-inclusive view &mdash; rates shown include the following (last updated March 2026)</div>
-    <div class="sb-item"><div class="sb-dot"></div><strong>InPost</strong> &mdash; +5% fuel surcharge per agreed rates</div>
-    <div class="sb-item"><div class="sb-dot"></div><strong>DPD</strong> &mdash; +18.7% fuel &amp; energy (eff. 16 Mar 2026)</div>
-    <div class="sb-item"><div class="sb-dot"></div><strong>DHL</strong> &mdash; +24.5% fuel &amp; road (Apr 2026, up to 31.5kg) + £0.75 congestion (from Mar 2026 indicative rates)</div>
-    <div class="sb-item"><div class="sb-dot"></div><strong>Royal Mail</strong> &mdash; +11% fuel &amp; energy (eff. 5 Jan 2026) + £0.05 green surcharge (eff. 31 Mar 2025) + £0.50 signed-for (indicative &mdash; not yet confirmed in deal)</div>
-    <div class="sb-item"><div class="sb-dot"></div><strong>Evri</strong> &mdash; unchanged (fuel already included in quoted rates; £50 collection fee is volume-triggered, not per-parcel)</div>
-    <div class="sb-note">Fuel surcharges are percentage-based and change regularly. DPD: check dpd.co.uk/fuel &mdash; DHL: check dhl.com fuel surcharge page &mdash; Royal Mail: check royalmail.com/business/mail/surcharges. Update the SURCHARGE_DATA block in the HTML when rates change.</div>
-  </div>
-</div>
-
 <!-- TAB 1: STANDARD / 48HR -->
 <div id="standard" class="tab-content active">
   <div class="section-title">Standard / 48hr Delivery</div>
   <div class="section-sub">All standard and 48-hour services consolidated. Filter by parcel weight to rank carriers cheapest first for that band.</div>
   <div id="std-insights" class="insights"></div>
-  <div class="calc-card">
-    <h3>Quick Cost Estimator</h3>
-    <div class="calc-row">
-      <div class="calc-field">
-        <label>Parcels per week</label>
-        <input type="number" id="s-count" value="1000" min="1" max="99999">
-      </div>
-      <div class="calc-field">
-        <label>Typical weight band</label>
-        <select id="s-weight">
-          <option value="0-2">0&#8211;2kg</option>
-          <option value="2-3">2&#8211;3kg</option>
-          <option value="3-15" selected>3&#8211;15kg</option>
-          <option value="15-20">15&#8211;20kg</option>
-          <option value="20-30">20&#8211;30kg</option>
-        </select>
-      </div>
-      <button class="calc-btn" onclick="runCalc('standard')">Calculate</button>
-    </div>
-    <div id="s-calc-out" class="calc-results"></div>
-  </div>
   <div class="weight-filter">
     <span class="wf-label">Filter by weight:</span>
     <button class="wbtn active" onclick="filterW('std','all',this)">All Weights</button>
@@ -350,6 +316,27 @@
     <div class="leg-item"><div class="leg-dot" style="background:var(--red-bg);border:1px solid var(--red-txt)"></div>Most expensive in band</div>
     <div class="leg-item"><div class="leg-dot" style="background:var(--surf4);border:1px solid var(--divider)"></div>Not available</div>
   </div>
+  <div class="calc-card">
+    <h3>Quick Cost Estimator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Parcels per week</label>
+        <input type="number" id="s-count" value="1000" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label>Typical weight band</label>
+        <select id="s-weight">
+          <option value="0-2">0&#8211;2kg</option>
+          <option value="2-3">2&#8211;3kg</option>
+          <option value="3-15" selected>3&#8211;15kg</option>
+          <option value="15-20">15&#8211;20kg</option>
+          <option value="20-30">20&#8211;30kg</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="runCalc('standard')">Calculate</button>
+    </div>
+    <div id="s-calc-out" class="calc-results"></div>
+  </div>
 </div>
 
 
@@ -358,27 +345,6 @@
   <div class="section-title">Next Day Delivery</div>
   <div class="section-sub">All next-day / 24-hour services. Filter by parcel weight to rank carriers cheapest first.</div>
   <div id="nd-insights" class="insights"></div>
-  <div class="calc-card">
-    <h3>Quick Cost Estimator</h3>
-    <div class="calc-row">
-      <div class="calc-field">
-        <label>Parcels per week</label>
-        <input type="number" id="nd-count" value="1000" min="1" max="99999">
-      </div>
-      <div class="calc-field">
-        <label>Typical weight band</label>
-        <select id="nd-weight">
-          <option value="0-2">0&#8211;2kg</option>
-          <option value="2-3">2&#8211;3kg</option>
-          <option value="3-15" selected>3&#8211;15kg</option>
-          <option value="15-20">15&#8211;20kg</option>
-          <option value="20-30">20&#8211;30kg</option>
-        </select>
-      </div>
-      <button class="calc-btn" onclick="runCalc('nextday')">Calculate</button>
-    </div>
-    <div id="nd-calc-out" class="calc-results"></div>
-  </div>
   <div class="weight-filter">
     <span class="wf-label">Filter by weight:</span>
     <button class="wbtn active" onclick="filterW('nd','all',this)">All Weights</button>
@@ -411,6 +377,27 @@
     <div class="leg-item"><div class="leg-dot" style="background:var(--surf8);border:1px solid var(--divider)"></div>Mid range</div>
     <div class="leg-item"><div class="leg-dot" style="background:var(--red-bg);border:1px solid var(--red-txt)"></div>Most expensive in band</div>
     <div class="leg-item"><div class="leg-dot" style="background:var(--surf4);border:1px solid var(--divider)"></div>Not available</div>
+  </div>
+  <div class="calc-card">
+    <h3>Quick Cost Estimator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Parcels per week</label>
+        <input type="number" id="nd-count" value="1000" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label>Typical weight band</label>
+        <select id="nd-weight">
+          <option value="0-2">0&#8211;2kg</option>
+          <option value="2-3">2&#8211;3kg</option>
+          <option value="3-15" selected>3&#8211;15kg</option>
+          <option value="15-20">15&#8211;20kg</option>
+          <option value="20-30">20&#8211;30kg</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="runCalc('nextday')">Calculate</button>
+    </div>
+    <div id="nd-calc-out" class="calc-results"></div>
   </div>
 </div>
 
@@ -1400,6 +1387,20 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
+
+<!-- SURCHARGE BANNER (shown when toggle is ON) -->
+<div id="surcharge-banner">
+  <div class="sb-inner">
+    <div class="sb-title">Surcharge-inclusive view &mdash; rates shown include the following (last updated March 2026)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>InPost</strong> &mdash; +5% fuel surcharge per agreed rates</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>DPD</strong> &mdash; +18.7% fuel &amp; energy (eff. 16 Mar 2026)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>DHL</strong> &mdash; +24.5% fuel &amp; road (Apr 2026, up to 31.5kg) + £0.75 congestion (from Mar 2026 indicative rates)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>Royal Mail</strong> &mdash; +11% fuel &amp; energy (eff. 5 Jan 2026) + £0.05 green surcharge (eff. 31 Mar 2025) + £0.50 signed-for (indicative &mdash; not yet confirmed in deal)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>Evri</strong> &mdash; unchanged (fuel already included in quoted rates; £50 collection fee is volume-triggered, not per-parcel)</div>
+    <div class="sb-note">Fuel surcharges are percentage-based and change regularly. DPD: check dpd.co.uk/fuel &mdash; DHL: check dhl.com fuel surcharge page &mdash; Royal Mail: check royalmail.com/business/mail/surcharges. Update the SURCHARGE_DATA block in the HTML when rates change.</div>
+  </div>
+</div>
+
 </body>
 </html>
 
