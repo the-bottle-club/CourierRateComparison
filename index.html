@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courier Rate Comparison | The Bottle Club | March 2026</title>
+  <style>
+    :root {
+      --bg:          #121212;
+      --surf1:       #1E1E1E;
+      --surf4:       #252525;
+      --surf8:       #2A2A2A;
+      --surf24:      #323232;
+      --primary:     #90CAF9;
+      --primary-dim: #1A3A5C;
+      --on-high:     rgba(255,255,255,0.87);
+      --on-med:      rgba(255,255,255,0.60);
+      --on-low:      rgba(255,255,255,0.38);
+      --divider:     rgba(255,255,255,0.12);
+      --green-bg:    rgba(46,125,50,0.28);
+      --green-txt:   #A5D6A7;
+      --amber-bg:    rgba(255,160,0,0.18);
+      --amber-txt:   #FFD54F;
+      --red-bg:      rgba(183,28,28,0.22);
+      --red-txt:     #EF9A9A;
+      --surcharge-bg:#2C2000;
+      --surcharge-bd:#F9A825;
+      --surcharge-txt:#FFD54F;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--on-high); }
+
+    .header { background: #000000; color: white; padding: 28px 36px 20px; border-bottom: 1px solid var(--divider); }
+    .header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+    .header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+    .header-sub { font-size: 13px; color: var(--on-med); margin-top: 3px; }
+    .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .header-logo { display: block; height: 36px; width: auto; }
+    .header-date { font-size: 12px; background: rgba(255,255,255,0.08); border: 1px solid var(--divider); border-radius: 20px; padding: 5px 13px; color: var(--on-med); white-space: nowrap; }
+    .carrier-badges { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .cbadge { background: rgba(255,255,255,0.07); border: 1px solid var(--divider); border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 500; color: var(--on-med); }
+
+    .qd-card { background: var(--surf1); border: 1px solid var(--divider); border-radius: 12px; padding: 22px 24px; margin-bottom: 16px; }
+    .qd-card h3 { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 14px; border-bottom: 1px solid var(--divider); padding-bottom: 10px; }
+    .qd-row { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.06); align-items: baseline; flex-wrap: wrap; }
+    .qd-row:last-child { border-bottom: none; }
+    .qd-label { font-size: 12px; font-weight: 700; color: var(--on-med); min-width: 180px; }
+    .qd-val { font-size: 13.5px; color: var(--on-high); }
+    .qd-tag { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-left: 8px; }
+    .qd-tag.amber  { background: var(--amber-bg); color: var(--amber-txt); }
+    .qd-tag.purple { background: rgba(149,117,205,0.2); color: #CE93D8; }
+    .qd-tag.green  { background: var(--green-bg); color: var(--green-txt); }
+    .qd-tag.blue   { background: rgba(144,202,249,0.15); color: var(--primary); }
+
+    .tab-nav { background: var(--surf1); border-bottom: 1px solid var(--divider); padding: 0 36px; display: flex; gap: 0; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+    .tab-btn { padding: 15px 22px; font-size: 14px; font-weight: 500; border: none; background: none; cursor: pointer; color: var(--on-med); border-bottom: 3px solid transparent; margin-bottom: -1px; transition: all 0.2s; white-space: nowrap; }
+    .tab-btn:hover { color: var(--on-high); background: rgba(255,255,255,0.05); }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
+
+    .tab-content { display: none; padding: 28px 36px 40px; max-width: 1440px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+
+    .section-title { font-size: 20px; font-weight: 800; color: var(--on-high); }
+    .section-sub { font-size: 13px; color: var(--on-med); margin-top: 4px; margin-bottom: 20px; }
+
+    .insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 22px; }
+    .ic { background: var(--surf4); border-radius: 10px; padding: 14px 18px; border-left: 4px solid var(--primary); border-top: 1px solid var(--divider); border-right: 1px solid var(--divider); border-bottom: 1px solid var(--divider); }
+    .ic.green  { border-left-color: var(--green-txt); }
+    .ic.amber  { border-left-color: var(--amber-txt); }
+    .ic.purple { border-left-color: #CE93D8; }
+    .ic.brand-rm {
+      border-left: 4px solid transparent;
+      background-image: linear-gradient(to bottom, #C62828 50%, #FFD54F 50%);
+      background-size: 4px 100%; background-repeat: no-repeat;
+      background-position: 0 0; background-origin: border-box;
+    }
+    .ic.brand-dpd    { border-left-color: #C62828; }
+    .ic.brand-yellow { border-left-color: #FFD54F; }
+    .ic.brand-blue   { border-left-color: #42A5F5; }
+
+    tr.row-inpost td:first-child { border-left: 4px solid #FFD54F; }
+    tr.row-rm td:first-child {
+      border-left: 4px solid transparent;
+      background-image: linear-gradient(to bottom, #C62828 50%, #FFD54F 50%);
+      background-size: 4px 100%; background-repeat: no-repeat;
+      background-position: 0 0; background-origin: border-box;
+    }
+    tr.row-evri   td:first-child { border-left: 4px solid #42A5F5; }
+    tr.row-dpd    td:first-child { border-left: 4px solid #C62828; }
+    tr.row-dhl    td:first-child { border-left: 4px solid #FFD54F; }
+    .ic-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--on-low); letter-spacing: 0.6px; }
+    .ic-val { font-size: 22px; font-weight: 900; color: var(--on-high); margin: 4px 0 2px; }
+    .ic-desc { font-size: 12px; color: var(--on-med); }
+
+    .weight-filter { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+    .wf-label { font-size: 12.5px; font-weight: 700; color: var(--on-med); margin-right: 4px; }
+    .wbtn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--divider); background: var(--surf4); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; color: var(--on-med); }
+    .wbtn:hover { border-color: var(--primary); color: var(--primary); }
+    .wbtn.active { background: var(--primary-dim); border-color: var(--primary); color: var(--primary); font-weight: 700; }
+
+    .tcard { background: var(--surf1); border-radius: 12px; border: 1px solid var(--divider); overflow: hidden; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { background: var(--surf8); color: var(--on-high); padding: 13px 16px; text-align: left; font-size: 13px; font-weight: 600; border-bottom: 1px solid var(--divider); }
+    thead th.wcol { text-align: center; min-width: 90px; }
+    thead th.active-wcol { background: var(--primary-dim); color: var(--primary); }
+    tbody td { padding: 13px 16px; font-size: 13.5px; border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top; color: var(--on-high); }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.04); }
+
+    td.wval { text-align: center; font-weight: 700; font-size: 15px; color: var(--on-high); }
+    td.best  { background: var(--green-bg); color: var(--green-txt); text-align: center; font-weight: 800; font-size: 15px; }
+    td.good  { background: var(--amber-bg); color: var(--amber-txt); text-align: center; font-weight: 700; font-size: 15px; }
+    td.mid   { text-align: center; font-weight: 700; font-size: 15px; color: var(--on-high); }
+    td.high  { background: var(--red-bg); color: var(--red-txt); text-align: center; font-weight: 700; font-size: 15px; }
+    td.na    { text-align: center; color: var(--on-low); font-size: 12.5px; background: rgba(255,255,255,0.02); }
+
+    .cname { font-weight: 700; font-size: 14px; color: var(--primary); }
+    .csvc  { font-size: 12px; color: var(--on-med); margin-top: 2px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10.5px; font-weight: 700; margin-top: 5px; }
+    .b-revised  { background: var(--amber-bg); color: var(--amber-txt); }
+    .b-proposed { background: rgba(149,117,205,0.2); color: #CE93D8; }
+    .b-current  { background: var(--green-bg); color: var(--green-txt); }
+    .b-locker   { background: rgba(79,195,247,0.15); color: #4FC3F7; }
+    .b-inject   { background: rgba(129,199,132,0.15); color: #81C784; }
+    .b-collect  { background: rgba(255,183,77,0.15);  color: #FFB74D; }
+    .b-blue     { background: rgba(144,202,249,0.15); color: var(--primary); }
+
+    .n  { font-size: 12px; color: var(--on-med); margin-top: 4px; line-height: 1.5; }
+    .nw { font-size: 12px; color: var(--amber-txt); margin-top: 4px; line-height: 1.5; }
+
+    .rank-badge { display: inline-block; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 800; text-align: center; line-height: 22px; margin-right: 4px; vertical-align: middle; }
+    .rank-1 { background: #F9A825; color: #1a1100; }
+    .rank-2 { background: var(--surf24); color: var(--on-high); }
+    .rank-3 { background: #BF360C; color: white; }
+
+    .ext-carrier-hdr { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--primary); letter-spacing: 0.5px; display: block; margin-bottom: 3px; opacity: 0.75; }
+    .ext-price { font-size: 15px; font-weight: 800; color: var(--on-high); }
+    .ext-range { font-size: 11.5px; color: var(--on-med); }
+    td.ext-best { background: var(--green-bg); }
+    td.ext-mid  { background: var(--amber-bg); }
+    td.ext-high { background: var(--red-bg); }
+    .region-name { font-weight: 700; font-size: 14px; color: var(--primary); }
+    .region-pc { font-size: 11px; color: var(--on-low); margin-top: 3px; }
+    thead.ext-head th { background: var(--surf8); }
+
+    thead.s-head th { background: #2C1810; color: #FFCCBC; border-bottom: 1px solid #BF360C; }
+    td.s-val { background: var(--surcharge-bg); border-left: 3px solid var(--surcharge-bd); padding: 11px 16px; }
+    td.s-val .sv { font-weight: 700; color: var(--surcharge-txt); font-size: 14px; }
+    td.s-val .sn { font-size: 11.5px; color: rgba(255,213,79,0.7); margin-top: 3px; }
+    td.s-na { text-align: center; color: var(--on-low); font-size: 18px; }
+    .s-section-row td { background: #1F1500; font-weight: 700; font-size: 12.5px; color: var(--amber-txt); padding: 8px 16px; border-top: 1px solid rgba(249,168,37,0.3); }
+
+    .warn-box { background: #1C1400; border: 1px solid rgba(249,168,37,0.35); border-radius: 10px; padding: 16px 20px; margin-top: 16px; }
+    .warn-box h4 { color: var(--amber-txt); font-size: 14px; margin-bottom: 10px; }
+    .warn-box li { font-size: 13px; color: rgba(255,213,79,0.85); line-height: 2; padding-left: 4px; }
+
+    .calc-card { background: var(--surf4); border: 1px solid var(--divider); border-radius: 12px; padding: 20px 24px; margin-bottom: 22px; border-top: 3px solid var(--primary); }
+    .calc-card h3 { font-size: 15px; font-weight: 700; color: var(--on-high); margin-bottom: 14px; }
+    .calc-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+    .calc-field { display: flex; flex-direction: column; gap: 5px; }
+    .calc-field label { font-size: 12px; font-weight: 600; color: var(--on-med); }
+    .calc-field input, .calc-field select { padding: 8px 12px; border: 1px solid var(--divider); border-radius: 8px; font-size: 14px; outline: none; background: var(--surf8); color: var(--on-high); }
+    .calc-field input:focus, .calc-field select:focus { border-color: var(--primary); }
+    .calc-field select option { background: var(--surf8); }
+    .calc-btn { padding: 9px 22px; background: var(--primary-dim); border: 1px solid var(--primary); color: var(--primary); border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    .calc-btn:hover { background: #1E4A7A; }
+    .calc-results { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+    .cr-item { border-radius: 8px; padding: 12px 14px; border: 1px solid var(--divider); background: var(--surf8); }
+    .cr-item.best-calc { background: var(--green-bg); border-color: rgba(165,214,167,0.3); }
+    .cr-carrier { font-size: 12px; font-weight: 700; color: var(--on-med); }
+    .cr-weekly { font-size: 18px; font-weight: 900; color: var(--on-high); margin: 3px 0 1px; }
+    .cr-annual { font-size: 11.5px; color: var(--on-med); }
+    .cr-na { font-size: 12px; color: var(--on-low); font-style: italic; }
+
+    .legend { display: flex; gap: 16px; margin-top: 14px; flex-wrap: wrap; align-items: center; }
+    .leg-label { font-size: 12.5px; font-weight: 700; color: var(--on-med); }
+    .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--on-med); }
+    .leg-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+    .info-box { background: rgba(144,202,249,0.08); border: 1px solid rgba(144,202,249,0.25); border-radius: 10px; padding: 16px 20px; margin-top: 4px; }
+    .info-box strong { color: var(--primary); }
+    .info-box p { font-size: 13px; color: var(--on-med); margin-top: 8px; line-height: 1.8; }
+
+    @media(max-width:768px) {
+      .header { padding: 18px 18px 14px; }
+      .tab-content { padding: 18px; }
+      .tab-nav { padding: 0 10px; }
+      .tab-btn { padding: 12px 10px; font-size: 12.5px; }
+      thead th, tbody td { padding: 9px 10px; }
+    }
+
+    /* ── SURCHARGE TOGGLE ─────────────────────────────────────────── */
+    .surcharge-toggle-wrap { display: flex; align-items: center; gap: 10px; }
+    .stoggle-label { font-size: 12.5px; font-weight: 600; color: var(--on-med); white-space: nowrap; }
+    .stoggle { position: relative; display: inline-block; width: 44px; height: 24px; cursor: pointer; flex-shrink: 0; }
+    .stoggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .stoggle-track { position: absolute; inset: 0; background: var(--surf24); border: 1px solid var(--divider); border-radius: 12px; transition: background 0.2s, border-color 0.2s; }
+    .stoggle input:checked + .stoggle-track { background: var(--primary-dim); border-color: var(--primary); }
+    .stoggle-thumb { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--on-med); border-radius: 50%; transition: transform 0.2s, background 0.2s; }
+    .stoggle input:checked ~ .stoggle-thumb { transform: translateX(20px); background: var(--primary); }
+
+
+    /* ── SURCHARGE BANNER ─────────────────────────────────────────── */
+    #surcharge-banner { position: fixed; bottom: -200px; left: 0; right: 0; z-index: 900; background: #1C1A00; border-top: 2px solid rgba(249,168,37,0.4); padding: 12px 36px; pointer-events: none; opacity: 0; transition: bottom 0.3s ease, opacity 0.3s ease; box-shadow: 0 -4px 24px rgba(0,0,0,0.5); }
+    #surcharge-banner.visible { bottom: 0; opacity: 1; pointer-events: auto; }
+    .sb-inner { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; }
+    .sb-title { font-size: 12px; font-weight: 700; color: var(--amber-txt); flex-basis: 100%; margin-bottom: 4px; }
+    .sb-item { font-size: 12px; color: rgba(255,213,79,0.85); display: flex; align-items: baseline; gap: 5px; }
+    .sb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber-txt); flex-shrink: 0; margin-top: 2px; }
+    .sb-note { font-size: 11.5px; color: var(--on-low); margin-top: 6px; flex-basis: 100%; font-style: italic; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Courier Rate Comparison</h1>
+      <div class="header-sub">The Bottle Club &mdash; Director Review &mdash; March 2026</div>
+    </div>
+    <div class="header-right">
+      <svg class="header-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.5 110.2" role="img" aria-label="The Bottle Club">
+        <polygon points="0 80.1 423.2 80.1 423.2 110.2 559.5 110.2 559.5 80.1 559.5 0 423.2 0 0 0 0 80.1" fill="#fff"/>
+        <g fill="#010101">
+          <path d="M50.7,28.2h-10.9s0,34.4,0,34.4h-11.3s0-34.4,0-34.4h-10.9s0-10.6,0-10.6h33.1s0,10.6,0,10.6Z"/>
+          <path d="M95,17.5v45s-11.2,0-11.2,0v-17.8s-17.5,0-17.5,0v17.8s-11.2,0-11.2,0V17.6s11.2,0,11.2,0v16.6s17.5,0,17.5,0v-16.6s11.2,0,11.2,0Z"/>
+          <path d="M130.7,52.2v10.3s-28.1,0-28.1,0V17.5s26.2,0,26.2,0v10.3s-15,0-15,0v7s16.6,0,16.6,0v9.4s-16.6,0-16.6,0v7.9s16.9,0,16.9,0Z"/>
+          <path d="M183.9,50.3c0,6.9-5.3,12.2-13.6,12.2h-15.8s0-45,0-45h15.9c7.5,0,12.2,5.6,12.2,11.9,0,4.1-2.1,8-5.7,10.1,4.4,2.1,6.9,6.1,6.9,10.8ZM165.8,26.6v8.8s1.3,0,1.3,0c2.9,0,4.7-1.8,4.7-4.4,0-2.6-1.8-4.4-4.7-4.4h-1.3ZM173,48.8c0-2.9-1.8-4.7-5-4.7h-2.2s0,9.4,0,9.4h2.2c3.2,0,5-1.8,5-4.7Z"/>
+          <path d="M188.3,40c0-13.2,10.4-23.4,23.7-23.5,13.4,0,23.8,10.2,23.8,23.4,0,13.2-10.4,23.4-23.7,23.5-13.4,0-23.8-10.2-23.8-23.4ZM224.6,40c0-7.2-5.4-12.8-12.5-12.8-7.1,0-12.5,5.6-12.5,12.8s5.4,12.8,12.5,12.8c7.1,0,12.5-5.6,12.5-12.8Z"/>
+          <polygon points="304.6 28 304.6 17.4 253.8 17.5 253.8 17.5 237.1 17.5 237.1 28.1 248 28.1 248 62.5 259.3 62.4 259.2 28.1 262.9 28.1 270.2 28.1 270.2 28.1 282.4 28.1 282.4 62.4 293.6 62.4 293.6 28.1 304.6 28"/>
+          <path d="M337.1,51.8v10.6s-28.1,0-28.1,0V17.4s11.2,0,11.2,0v34.4s16.9,0,16.9,0Z"/>
+          <path d="M369.6,52.1v10.3s-28.1,0-28.1,0V17.4s26.2,0,26.2,0v10.3s-15,0-15,0v7s16.6,0,16.6,0v9.4s-16.6,0-16.6,0v7.9s16.9,0,16.9,0Z"/>
+          <path d="M391.6,39.9c0-13.2,10.4-23.4,23.7-23.5,8.6,0,15.4,4.2,19.7,10.9l-8.8,6.3c-2.3-3.8-6.1-6.5-10.9-6.5-7.1,0-12.5,5.6-12.5,12.8,0,7.2,5.4,12.8,12.5,12.8,4.6,0,8.4-2.6,10.7-6.3l9,6.1c-4.4,6.6-11.2,10.9-19.7,10.9-13.4,0-23.8-10.2-23.8-23.4Z"/>
+          <path d="M468.8,51.7v10.6s-28.1,0-28.1,0V17.3s11.2,0,11.2,0v34.4s16.9,0,16.9,0Z"/>
+          <path d="M471.7,46.1v-28.8s11.2,0,11.2,0v28.4c0,3.8,2,6.2,5.6,6.2,3.7,0,5.6-2.4,5.6-6.3v-28.4s11.2,0,11.2,0v28.8c0,10.6-6.5,17.2-16.8,17.2-10.3,0-16.9-6.6-16.9-17.2Z"/>
+          <path d="M542,50.1c0,6.9-5.3,12.2-13.6,12.2h-15.8s0-45,0-45h15.9c7.5,0,12.2,5.6,12.2,11.9,0,4.1-2.1,8-5.7,10.1,4.4,2.1,6.9,6.1,6.9,10.8ZM523.8,26.3v8.8s1.3,0,1.3,0c2.9,0,4.7-1.8,4.7-4.4,0-2.6-1.8-4.4-4.7-4.4h-1.3ZM531,48.5c0-2.9-1.8-4.7-5-4.7h-2.2s0,9.4,0,9.4h2.2c3.2,0,5-1.8,5-4.7Z"/>
+          <path d="M445.7,82.8c-2.8,0-4.9,2.1-5,4.9,0,2.7,2,4.9,4.9,5,2.8,0,4.9-2.1,5-4.9,0-2.7-2-4.9-4.9-5Z"/>
+          <path d="M466.5,85.2c-2.8,0-4.9-2.2-4.9-5,0-2.8,2.2-4.9,5-4.9,1.8,0,3.3.9,4.2,2.3l6.4-4.2c-2.2-3.5-5.9-5.7-10.5-5.7-7.2,0-12.8,5.3-12.9,12.4,0,7.1,5.4,12.6,12.7,12.6,4.9,0,8.7-2.5,10.9-6.2l-6.4-3.8c-.8,1.5-2.4,2.4-4.3,2.4Z"/>
+          <path d="M491.2,68c-7.2,0-12.8,5.3-12.9,12.4,0,7.1,5.4,12.6,12.7,12.6,7.2,0,12.8-5.3,12.9-12.4,0-7.1-5.4-12.6-12.7-12.6ZM491.1,85.4c-2.8,0-4.9-2.2-4.9-5,0-2.8,2.2-4.9,5-4.9,2.8,0,4.9,2.2,4.9,5,0,2.8-2.2,4.9-5,4.9Z"/>
+          <path d="M535,68.4c-3,0-5,1.2-7,3.5-1-2.3-3.2-3.6-6.3-3.6-2.8,0-4.7,1-6.5,3l-.2-2.3h-7.4c0,0-.2,23.5-.2,23.5h7.9c0,0,.1-14.9.1-14.9.9-1.1,2-1.7,3-1.7,1.6,0,2.4.9,2.4,2.8v13.9c-.1,0,7.7,0,7.7,0v-14.9c1-1.1,2.2-1.8,3.1-1.7,1.6,0,2.4.9,2.4,2.8v13.9c-.1,0,7.7,0,7.7,0l.2-17c0-4.6-2.5-7.3-7-7.3Z"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="carrier-badges">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span class="cbadge">InPost</span>
+      <span class="cbadge">Royal Mail</span>
+      <span class="cbadge">Evri (via MHI)</span>
+      <span class="cbadge">DPD</span>
+      <span class="cbadge">DHL eCommerce</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div class="surcharge-toggle-wrap">
+        <span class="stoggle-label">Base rates</span>
+        <label class="stoggle" title="Toggle surcharge-inclusive rates">
+          <input type="checkbox" id="surcharge-toggle-cb" onchange="toggleSurcharges(this.checked)">
+          <div class="stoggle-track"></div>
+          <div class="stoggle-thumb"></div>
+        </label>
+        <span class="stoggle-label">Inc. surcharges</span>
+      </div>
+      <div class="header-date">Last updated: March 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('standard',this)">Standard / 48hr</button>
+  <button class="tab-btn" onclick="showTab('nextday',this)">Next Day</button>
+  <button class="tab-btn" onclick="showTab('extended',this)">Extended Services</button>
+  <button class="tab-btn" onclick="showTab('surcharges',this)">Surcharges</button>
+  <button class="tab-btn" onclick="showTab('quotation',this)">Quotation Details</button>
+  <button class="tab-btn" onclick="showTab('locker',this)">Locker Rates</button>
+</nav>
+
+
+<!-- SURCHARGE BANNER (shown when toggle is ON) -->
+<div id="surcharge-banner">
+  <div class="sb-inner">
+    <div class="sb-title">Surcharge-inclusive view &mdash; rates shown include the following (last updated March 2026)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>InPost</strong> &mdash; +5% fuel surcharge per agreed rates</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>DPD</strong> &mdash; +18.7% fuel &amp; energy (eff. 16 Mar 2026)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>DHL</strong> &mdash; +24.5% fuel &amp; road (Apr 2026, up to 31.5kg) + £0.75 congestion (from Mar 2026 indicative rates)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>Royal Mail</strong> &mdash; +11% fuel &amp; energy (eff. 5 Jan 2026) + £0.05 green surcharge (eff. 31 Mar 2025) + £0.50 signed-for (indicative &mdash; not yet confirmed in deal)</div>
+    <div class="sb-item"><div class="sb-dot"></div><strong>Evri</strong> &mdash; unchanged (fuel already included in quoted rates; £50 collection fee is volume-triggered, not per-parcel)</div>
+    <div class="sb-note">Fuel surcharges are percentage-based and change regularly. DPD: check dpd.co.uk/fuel &mdash; DHL: check dhl.com fuel surcharge page &mdash; Royal Mail: check royalmail.com/business/mail/surcharges. Update the SURCHARGE_DATA block in the HTML when rates change.</div>
+  </div>
+</div>
+
+<!-- TAB 1: STANDARD / 48HR -->
+<div id="standard" class="tab-content active">
+  <div class="section-title">Standard / 48hr Delivery</div>
+  <div class="section-sub">All standard and 48-hour services consolidated. Filter by parcel weight to rank carriers cheapest first for that band.</div>
+  <div id="std-insights" class="insights"></div>
+  <div class="calc-card">
+    <h3>Quick Cost Estimator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Parcels per week</label>
+        <input type="number" id="s-count" value="1000" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label>Typical weight band</label>
+        <select id="s-weight">
+          <option value="0-2">0&#8211;2kg</option>
+          <option value="2-3">2&#8211;3kg</option>
+          <option value="3-15" selected>3&#8211;15kg</option>
+          <option value="15-20">15&#8211;20kg</option>
+          <option value="20-30">20&#8211;30kg</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="runCalc('standard')">Calculate</button>
+    </div>
+    <div id="s-calc-out" class="calc-results"></div>
+  </div>
+  <div class="weight-filter">
+    <span class="wf-label">Filter by weight:</span>
+    <button class="wbtn active" onclick="filterW('std','all',this)">All Weights</button>
+    <button class="wbtn" onclick="filterW('std','0-2',this)">0&#8211;2kg</button>
+    <button class="wbtn" onclick="filterW('std','2-3',this)">2&#8211;3kg</button>
+    <button class="wbtn" onclick="filterW('std','3-15',this)">3&#8211;15kg</button>
+    <button class="wbtn" onclick="filterW('std','15-20',this)">15&#8211;20kg</button>
+    <button class="wbtn" onclick="filterW('std','20-30',this)">20&#8211;30kg</button>
+  </div>
+  <div class="tcard">
+    <table id="std-table">
+      <thead>
+        <tr>
+          <th style="width:200px">Carrier / Service</th>
+          <th class="wcol" data-w="0-2">0&#8211;2kg</th>
+          <th class="wcol" data-w="2-3">2&#8211;3kg</th>
+          <th class="wcol" data-w="3-15">3&#8211;15kg</th>
+          <th class="wcol" data-w="15-20">15&#8211;20kg</th>
+          <th class="wcol" data-w="20-30">20&#8211;30kg</th>
+          <th>Notes / Caveats</th>
+        </tr>
+      </thead>
+      <tbody><!-- populated by renderRateTable() --></tbody>
+    </table>
+  </div>
+  <div class="legend">
+    <span class="leg-label">Legend:</span>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green-bg);border:1px solid var(--green-txt)"></div>Cheapest</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--amber-bg);border:1px solid var(--amber-txt)"></div>2nd cheapest</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--surf8);border:1px solid var(--divider)"></div>Mid range</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--red-bg);border:1px solid var(--red-txt)"></div>Most expensive in band</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--surf4);border:1px solid var(--divider)"></div>Not available</div>
+  </div>
+</div>
+
+
+<!-- TAB 2: NEXT DAY -->
+<div id="nextday" class="tab-content">
+  <div class="section-title">Next Day Delivery</div>
+  <div class="section-sub">All next-day / 24-hour services. Filter by parcel weight to rank carriers cheapest first.</div>
+  <div id="nd-insights" class="insights"></div>
+  <div class="calc-card">
+    <h3>Quick Cost Estimator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Parcels per week</label>
+        <input type="number" id="nd-count" value="1000" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label>Typical weight band</label>
+        <select id="nd-weight">
+          <option value="0-2">0&#8211;2kg</option>
+          <option value="2-3">2&#8211;3kg</option>
+          <option value="3-15" selected>3&#8211;15kg</option>
+          <option value="15-20">15&#8211;20kg</option>
+          <option value="20-30">20&#8211;30kg</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="runCalc('nextday')">Calculate</button>
+    </div>
+    <div id="nd-calc-out" class="calc-results"></div>
+  </div>
+  <div class="weight-filter">
+    <span class="wf-label">Filter by weight:</span>
+    <button class="wbtn active" onclick="filterW('nd','all',this)">All Weights</button>
+    <button class="wbtn" onclick="filterW('nd','0-2',this)">0&#8211;2kg</button>
+    <button class="wbtn" onclick="filterW('nd','2-3',this)">2&#8211;3kg</button>
+    <button class="wbtn" onclick="filterW('nd','3-15',this)">3&#8211;15kg</button>
+    <button class="wbtn" onclick="filterW('nd','15-20',this)">15&#8211;20kg</button>
+    <button class="wbtn" onclick="filterW('nd','20-30',this)">20&#8211;30kg</button>
+  </div>
+  <div class="tcard">
+    <table id="nd-table">
+      <thead>
+        <tr>
+          <th style="width:200px">Carrier / Service</th>
+          <th class="wcol" data-w="0-2">0&#8211;2kg</th>
+          <th class="wcol" data-w="2-3">2&#8211;3kg</th>
+          <th class="wcol" data-w="3-15">3&#8211;15kg</th>
+          <th class="wcol" data-w="15-20">15&#8211;20kg</th>
+          <th class="wcol" data-w="20-30">20&#8211;30kg</th>
+          <th>Notes / Caveats</th>
+        </tr>
+      </thead>
+      <tbody><!-- populated by renderRateTable() --></tbody>
+    </table>
+  </div>
+  <div class="legend">
+    <span class="leg-label">Legend:</span>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green-bg);border:1px solid var(--green-txt)"></div>Cheapest</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--amber-bg);border:1px solid var(--amber-txt)"></div>2nd cheapest</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--surf8);border:1px solid var(--divider)"></div>Mid range</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--red-bg);border:1px solid var(--red-txt)"></div>Most expensive in band</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--surf4);border:1px solid var(--divider)"></div>Not available</div>
+  </div>
+</div>
+
+
+<!-- TAB 3: EXTENDED SERVICES -->
+<div id="extended" class="tab-content">
+  <div class="section-title">Extended Services</div>
+  <div class="section-sub">Rates for Scottish Highlands &amp; Islands, Northern Ireland, Isle of Man and Channel Islands. InPost and Royal Mail have no coverage at the quoted rates.</div>
+  <div class="tcard">
+    <table id="extended-table">
+      <thead class="ext-head">
+        <tr>
+          <th style="width:220px">Carrier / Service</th>
+          <th>Highlands &amp; Islands<div style="font-size:10px;font-weight:400;opacity:0.75;margin-top:2px">DD, EH, FK, AB, IV, KW, PA, PH, HS, ZE</div></th>
+          <th>Northern Ireland<div style="font-size:10px;font-weight:400;opacity:0.75;margin-top:2px">BT postcodes</div></th>
+          <th>Isle of Man<div style="font-size:10px;font-weight:400;opacity:0.75;margin-top:2px">IM postcodes</div></th>
+          <th>Channel Islands<div style="font-size:10px;font-weight:400;opacity:0.75;margin-top:2px">GY (Guernsey) &amp; JE (Jersey)</div></th>
+          <th>Isle of Wight &amp; Scilly<div style="font-size:10px;font-weight:400;opacity:0.75;margin-top:2px">PO30&#8211;41, TR21&#8211;25</div></th>
+        </tr>
+      </thead>
+      <tbody><!-- populated by renderExtendedTable() --></tbody>
+    </table>
+  </div>
+  <div style="background:var(--primary-dim);border:1px solid rgba(144,202,249,0.25);border-radius:10px;padding:16px 20px;margin-top:4px">
+    <strong style="color:var(--primary);font-size:14px">Extended Services Summary</strong>
+    <p style="font-size:13px;color:var(--on-high);margin-top:8px;line-height:1.8">
+      <strong>Evri (MHI)</strong> is the clear winner for all extended regions. DHL Zone C (£10.00) is slightly cheaper than DPD (£10.98) for Highlands &amp; Islands and Northern Ireland on the first parcel, but DPD wins on Channel Islands (£14.03 vs £15.00 DHL Zone D). DHL Zone D is the most expensive for Isle of Man and Channel Islands. InPost and Royal Mail do not cover any extended regions at the quoted rates.
+    </p>
+  </div>
+</div>
+
+
+<!-- TAB 4: SURCHARGES (static — these rarely change; update values directly in this HTML section) -->
+<div id="surcharges" class="tab-content">
+  <div class="section-title">Surcharges &amp; Additional Fees</div>
+  <div class="section-sub">All known additional charges applied on top of base rates. These must be factored into total cost of ownership calculations.</div>
+  <div class="tcard">
+    <table>
+      <thead class="s-head">
+        <tr>
+          <th style="width:230px">Surcharge Type</th>
+          <th style="width:110px">InPost</th>
+          <th style="width:120px">Royal Mail</th>
+          <th>Evri (MHI)</th>
+          <th>DPD</th>
+          <th>DHL eCommerce</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fuel &amp; Energy</strong></td>
+          <td class="s-val"><div class="sv">5%</div><div class="sn">Applied to all rates per agreed terms</div></td>
+          <td class="s-val"><div class="sv">11%</div><div class="sn">Eff. 5 Jan 2026. Applies to Tracked 24 &amp; 48 contract customers. Check royalmail.com/business/mail/surcharges</div></td>
+          <td style="padding:11px 16px;color:var(--on-med);font-size:12.5px">Included in quoted rates</td>
+          <td class="s-val"><div class="sv">18.7%</div><div class="sn">Eff. 16 Mar 2026. Applied per shipment. Check dpd.co.uk/fuel for current rate</div></td>
+          <td class="s-val"><div class="sv">24.5%</div><div class="sn">Apr 2026 (up to 31.5kg). Indexed monthly. Check dhl.com fuel surcharge page</div></td>
+        </tr>
+        <tr>
+          <td><strong>Congestion</strong></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£0.95</div><div class="sn">Per shipment (as per Mar 2026 quotation)</div></td>
+          <td class="s-val"><div class="sv">£0.75</div><div class="sn">Per shipment (as per Mar 2026 indicative rates)</div></td>
+        </tr>
+        <tr>
+          <td><strong>Green Surcharge</strong><div class="n" style="font-size:11px">Royal Mail only &mdash; decarbonisation levy</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">5p per item</div><div class="sn">Eff. 31 Mar 2025. Applies to Tracked 24 &amp; 48 contract customers. Applied after fuel surcharge, before VAT.</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>Collection Surcharge</strong><div class="n" style="font-size:11px">Applies when volume drops below threshold</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£50.00 per collection</div><div class="sn">Triggered if volume &lt;140 parcels per pick-up</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>Volumetric (&gt;40 litres)</strong></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£0.60 per parcel</div><div class="sn">Applies if parcel volume exceeds 40 litres</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>Oversized / Overweight</strong><div class="n" style="font-size:11px">Parcels exceeding max dimensions/weight</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£23.50 per parcel</div><div class="sn">UK parcels exceeding max specs</div></td>
+          <td class="s-val"><div class="sv">£15.00 per item</div><div class="sn">Out of gauge surcharge</div></td>
+        </tr>
+        <tr>
+          <td><strong>Heavy Weight</strong><div class="n" style="font-size:11px">DHL only &#8212; over 30kg</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val">
+            <div class="sv">+£10.00</div><div class="sn">30.01&#8211;32kg per item</div>
+            <div class="sv" style="margin-top:6px">+£15.00</div><div class="sn">32.01&#8211;34kg per item</div>
+            <div class="sv" style="margin-top:6px">+£30.00</div><div class="sn">34.01&#8211;36kg per item</div>
+            <div class="sv" style="margin-top:6px">+£40.00</div><div class="sn">36kg+ per item</div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Long Length</strong><div class="n" style="font-size:11px">DHL only &#8212; over 120cm</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val">
+            <div class="sv">+£6.00</div><div class="sn">120&#8211;139.99cm</div>
+            <div class="sv" style="margin-top:4px">+£7.50</div><div class="sn">140&#8211;159.99cm</div>
+            <div class="sv" style="margin-top:4px">+£9.00 to +£76.00</div><div class="sn">160cm through to 340cm+</div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Non-compatible Sortation</strong><div class="n" style="font-size:11px">Parcels incompatible with automated equipment</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£6.75 per parcel</div><div class="sn">All zones including offshore and Ireland</div></td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>NI Clearance Charge</strong></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£0.50 per parcel</div><div class="sn">Applies to all parcels from GB to Northern Ireland</div></td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>Isle of Wight / Scilly Isles</strong></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">+£5.99 per shipment</div><div class="sn">PO30&#8211;PO41, TR21&#8211;TR25</div></td>
+        </tr>
+        <tr>
+          <td><strong>Relabelling</strong></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£0.96 per label</div><div class="sn">Address change or weight band change</div></td>
+          <td class="s-val"><div class="sv">£0.60 per parcel</div></td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>Return to Sender</strong></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">TBC</td>
+          <td class="s-val"><div class="sv">Same as outbound rate</div><div class="sn">Undeliverable returns charged at outbound cost</div></td>
+          <td class="s-val"><div class="sv">£18.25 per parcel</div><div class="sn">Return to Shop service</div></td>
+          <td class="s-val"><div class="sv">£4.50 per shipment</div><div class="sn">Return to Sender</div></td>
+        </tr>
+        <tr>
+          <td><strong>3rd Party Collection</strong><div class="n" style="font-size:11px">Collection from non-agreed address</div></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£12.50</div><div class="sn">UK rate (£15.50 Offshore, £18.00 Ireland)</div></td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>Nothing to Collect</strong></td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">£12.50</div></td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr class="s-section-row">
+          <td colspan="6">DHL Timed Service Add-ons (applied on top of base delivery rate per shipment)</td>
+        </tr>
+        <tr>
+          <td><strong>Next Working Day by Noon</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-na">N/A &#8212; timed via separate service</td>
+          <td class="s-val"><div class="sv">+£2.50</div><div class="sn">Added to base rate per shipment</div></td>
+        </tr>
+        <tr>
+          <td><strong>Next Working Day by 10:30am</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">+£6.89</div><div class="sn">Added to base rate per shipment</div></td>
+        </tr>
+        <tr>
+          <td><strong>Next Working Day by 9:00am</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">+£9.54</div><div class="sn">Added to base rate per shipment</div></td>
+        </tr>
+        <tr>
+          <td><strong>Saturday Delivery</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">+£7.42</div><div class="sn">Standard Saturday delivery</div></td>
+        </tr>
+        <tr>
+          <td><strong>Saturday by 10:30am</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">+£12.19</div></td>
+        </tr>
+        <tr>
+          <td><strong>Saturday by 9:00am</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-na">&#8212;</td>
+          <td class="s-val"><div class="sv">+£15.90</div></td>
+        </tr>
+        <tr class="s-section-row">
+          <td colspan="6">DPD Timed Services (total rates, not add-ons)</td>
+        </tr>
+        <tr>
+          <td><strong>DPD 10:30 (Parcel, first)</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-val"><div class="sv">£18.31</div><div class="sn">First parcel, UK mainland</div></td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+        <tr>
+          <td><strong>DPD 12:00 (Parcel, first)</strong></td>
+          <td class="s-na" colspan="3">&#8212;</td>
+          <td class="s-val"><div class="sv">£15.87</div><div class="sn">First parcel, UK mainland</div></td>
+          <td class="s-na">&#8212;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warn-box">
+    <h4>Key Surcharge Risks to Note</h4>
+    <ul style="padding-left:20px">
+      <li>DPD fuel &amp; energy is currently <strong>18.7%</strong> (eff. 16 March 2026) &#8212; applied as a percentage of the base rate per shipment. This changes regularly; check dpd.co.uk/fuel before finalising any cost models.</li>
+      <li>DHL fuel &amp; road is currently <strong>24.5%</strong> (April 2026, up to 31.5kg) &#8212; indexed monthly to Polish diesel prices and applied on top of base rates. This is the highest fuel surcharge of all carriers reviewed at this time.</li>
+      <li>Royal Mail applies <strong>both an 11% fuel surcharge</strong> (eff. 5 Jan 2026) and a <strong>5p green surcharge per item</strong> (eff. 31 Mar 2025) to Tracked 24 &amp; 48 contract customers. Neither has been confirmed as part of the current deal negotiation, but both are standard for contract accounts.</li>
+      <li>Evri's <strong>£50 collection surcharge</strong> fires automatically if volume drops below 140 parcels per collection. In periods of lower volume this could be a significant unexpected cost.</li>
+      <li>InPost currently has the <strong>cleanest surcharge profile</strong> &#8212; just 5% fuel on top of the agreed rates. No congestion or green levy.</li>
+      <li>DPD congestion charge of <strong>£0.95 per shipment</strong> is higher than DHL's £0.75 &#8212; relevant at scale &#8212; but DHL's fuel percentage (24.5%) is currently significantly higher than DPD's (18.7%).</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- TAB 5: QUOTATION DETAILS -->
+<div id="quotation" class="tab-content">
+  <div class="section-title">Quotation Details</div>
+  <div class="section-sub">Status, effective dates, and key terms for each carrier quote received as part of this review.</div>
+  <div id="quotation-cards"><!-- populated by renderQuotationDetails() --></div>
+</div>
+
+
+<!-- TAB 6: LOCKER RATES -->
+<div id="locker" class="tab-content">
+  <div class="section-title">Locker / OOH Rates</div>
+  <div class="section-sub">Out-of-home delivery rates &#8212; customers collect from locker or parcel shop locations. Not door-to-door. DPD Ship-to-Shop confirmed; InPost rates pending.</div>
+  <div style="background:var(--primary-dim);border:1px solid rgba(144,202,249,0.25);border-radius:10px;padding:16px 20px;margin-bottom:24px">
+    <strong style="color:var(--primary);font-size:14px">InPost rates still to be confirmed</strong>
+    <p style="font-size:13px;color:var(--on-high);margin-top:8px;line-height:1.8">
+      InPost locker / OOH rates have not yet been confirmed. DPD Ship-to-Shop has been added below at the agreed rate of £4.50 per parcel for items up to 20kg.
+    </p>
+  </div>
+  <div class="tcard">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:200px">Carrier / Service</th>
+          <th class="wcol" data-w="0-2">0&#8211;2kg</th>
+          <th class="wcol" data-w="2-3">2&#8211;3kg</th>
+          <th class="wcol" data-w="3-15">3&#8211;15kg</th>
+          <th class="wcol" data-w="15-20">15&#8211;20kg</th>
+          <th class="wcol" data-w="20-30">20&#8211;30kg</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-dpd">
+          <td>
+            <div class="cname">DPD</div>
+            <div class="csvc">Ship-to-Shop</div>
+            <span class="badge b-locker">Locker / OOH Only</span>
+          </td>
+          <td data-w="0-2" data-p="4.50" style="font-size:15px;font-weight:700;color:var(--on-high);text-align:center">£4.50</td>
+          <td data-w="2-3" data-p="4.50" style="font-size:15px;font-weight:700;color:var(--on-high);text-align:center">£4.50</td>
+          <td data-w="3-15" data-p="4.50" style="font-size:15px;font-weight:700;color:var(--on-high);text-align:center">£4.50</td>
+          <td data-w="15-20" data-p="4.50" style="font-size:15px;font-weight:700;color:var(--on-high);text-align:center">£4.50</td>
+          <td class="na" data-w="20-30" data-p="999">N/A</td>
+          <td>
+            <div class="n">Flat rate for items up to 20kg. Customers collect from DPD Pickup shop network.</div>
+            <div class="n">Next Day service. DPD fuel &amp; energy surcharge (18.7% eff. 16 Mar 2026) applies on top of base rate.</div>
+            <div class="nw">Customers must collect &#8212; not a door-to-door service. Not available above 20kg.</div>
+          </td>
+        </tr>
+        <tr class="row-inpost">
+          <td>
+            <div class="cname">InPost</div>
+            <div class="csvc">Locker / OOH Delivery</div>
+            <span class="badge b-locker">Locker / OOH Only</span>
+          </td>
+          <td class="na" data-w="0-2" data-p="999">TBC</td>
+          <td class="na" data-w="2-3" data-p="999">TBC</td>
+          <td class="na" data-w="3-15" data-p="999">TBC</td>
+          <td class="na" data-w="15-20" data-p="999">TBC</td>
+          <td class="na" data-w="20-30" data-p="999">TBC</td>
+          <td>
+            <div class="n">Locker and parcel shop network of 15,000+ UK locations.</div>
+            <div class="n">Inject at <strong>Waltham Cross EN3 7XQ by 20:00</strong> Mon&#8211;Fri for next-day locker availability.</div>
+            <div class="nw">Customers must collect &#8212; not a door-to-door service.</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     RATE DATA  (auto-generated from .md files)
+     To update rates: edit a .md file in rates/, then run:
+         python sync_rates.py
+     Reload this page and all numbers update automatically.
+     ================================================================ -->
+<script src="rates/courier-data.js"></script>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================
+     COURIER_DATA holds structure, labels and notes.
+     Numeric rates are imported from rates/courier-data.js above
+     via RATE_DATA — generated by sync_rates.py from the .md files.
+     ================================================================ -->
+<script>
+
+// ════════════════════════════════════════════════════════════════════
+//  COURIER DATA  —  edit this object to update the entire dashboard
+// ════════════════════════════════════════════════════════════════════
+
+const COURIER_DATA = {
+
+  // ── INPOST ──────────────────────────────────────────────────────
+  inpost: {
+    name:       'InPost',
+    rowClass:   'row-inpost',
+    brandClass: 'brand-yellow',
+    quotationTag: { text: 'OOH / Locker Delivery', cls: 'blue' },
+
+    standard: [
+      {
+        subLabel:    'Standard — Door to Door (Injected)',
+        badge:       { text: 'You inject at depot', cls: 'b-inject' },
+        calcLabel:   'InPost (Injected)',
+        insightDesc: 'InPost — injected (ex. surcharges)',
+        rateKey:     'inpost_inject',
+        rates: RATE_DATA.inpost_inject,
+        notes: [
+          ['n',  'Base rate — no collection surcharge. Door-to-door delivery.'],
+          ['n',  'Inject at <strong>Waltham Cross EN3 7XQ by 20:00</strong> Mon&#8211;Fri (22 miles / ~35 mins from IG11 7TS).'],
+          ['nw', '5% fuel surcharge applies on top. Size bands: Small (0&#8211;3kg), Medium (3&#8211;15kg), Large (15&#8211;30kg).']
+        ]
+      },
+      {
+        subLabel:    'Standard — Door to Door (Collection)',
+        badge:       { text: 'InPost collects', cls: 'b-collect' },
+        calcLabel:   'InPost (Collection)',
+        insightDesc: 'InPost — collected (ex. surcharges)',
+        rateKey:     'inpost_collect',
+        rates: RATE_DATA.inpost_collect,
+        notes: [
+          ['n',  'Base rate + £0.24 collection surcharge. InPost collects from your warehouse &#8212; no depot run required.'],
+          ['nw', '5% fuel surcharge also applies on top. Size bands: Small (0&#8211;3kg), Medium (3&#8211;15kg), Large (15&#8211;30kg).']
+        ]
+      }
+    ],
+
+    nextday: [
+      {
+        subLabel:    'Next Day — Injected (Indicative)',
+        badge:       { text: 'Indicative rate', cls: 'b-proposed' },
+        calcLabel:   'InPost Next Day (Injected)',
+        insightDesc: 'InPost Next Day &#8212; injected (ex. surcharges)',
+        rateKey:     'inpost_nd_inject',
+        rates: RATE_DATA.inpost_nd_inject,
+        notes: [
+          ['n',  '<strong>Indicative rates only</strong> &#8212; not yet confirmed by InPost.'],
+          ['n',  'Inject at <strong>Waltham Cross EN3 7XQ by 20:00</strong> Mon&#8211;Fri. OOH / locker delivery.'],
+          ['nw', 'Large (15&#8211;30kg) not available for next day. 5% fuel surcharge applies on top of base rates shown.']
+        ]
+      },
+      {
+        subLabel:    'Next Day — Collection (Indicative)',
+        badge:       { text: 'Indicative rate', cls: 'b-proposed' },
+        calcLabel:   'InPost Next Day (Collection)',
+        insightDesc: 'InPost Next Day &#8212; collected (ex. surcharges)',
+        rateKey:     'inpost_nd_collect',
+        rates: RATE_DATA.inpost_nd_collect,
+        notes: [
+          ['n',  '<strong>Indicative rates only</strong> &#8212; not yet confirmed by InPost. Includes £0.24 collection surcharge.'],
+          ['nw', 'Large (15&#8211;30kg) not available for next day. 5% fuel surcharge also applies on top.']
+        ]
+      }
+    ],
+
+    extendedLabel: 'OOH / Locker',
+    extended: null,   // Not available at quoted rates
+    extendedDimmed: true,
+
+    quotation: [
+      ['Quote Status',      'Agreed rates. 0.24p saving negotiated on final rate.'],
+      ['Delivery Model',    'Out-of-Home (OOH) only &#8212; delivery to lockers and parcel shops. Customers must collect. Not door-to-door.'],
+      ['Injection Point',   'Waltham Cross EN3 7XQ &#8212; 22 miles / ~35 mins from IG11 7TS. Must inject by 20:00 Mon&#8211;Fri for next-day processing.'],
+      ['Small (0&#8211;3kg)',     '£1.93 per parcel (injected) / £2.17 (collection)'],
+      ['Medium (3&#8211;15kg)',   '£2.48 per parcel (injected) / £2.72 (collection)'],
+      ['Large (15&#8211;30kg)',   '£3.57 per parcel (injected) / £3.81 (collection)'],
+      ['Network Size',      '15,000+ lockers and quality parcel shops across the UK'],
+      ['Extended Regions',  'Not available at quoted rates'],
+      ['Surcharges',        '5% fuel surcharge on all rates. Cleanest overall surcharge profile of all carriers reviewed.']
+    ]
+  },
+
+  // ── ROYAL MAIL ──────────────────────────────────────────────────
+  royalmail: {
+    name:       'Royal Mail',
+    rowClass:   'row-rm',
+    brandClass: 'brand-rm',
+    quotationTag: { text: 'Proposed / Under Negotiation', cls: 'purple' },
+
+    standard: [
+      {
+        subLabel:    'Tracked 48',
+        badge:       { text: 'Proposed Rate', cls: 'b-proposed' },
+        calcLabel:   'Royal Mail',
+        insightDesc: 'Royal Mail Tracked 48',
+        rateKey:     'rm_t48',
+        rates: RATE_DATA.rm_t48,
+        notes: [
+          ['n',  '<strong>Proposed rate under negotiation</strong> &#8212; offer from Louis (Royal Mail).'],
+          ['nw', 'Max weight approximately 2.75kg &#8212; not suitable for heavier parcels.'],
+          ['n',  'Current achieved rate: £2.30 (0&#8211;2kg, no surcharges). Our position challenges this offer as insufficient.'],
+          ['nw', 'Signed-for fee (~£0.50) and surcharges not yet agreed &#8212; could erode rate advantage.']
+        ]
+      }
+    ],
+
+    nextday: [
+      {
+        subLabel:    'Tracked 24',
+        badge:       { text: 'Proposed Rate', cls: 'b-proposed' },
+        calcLabel:   'Royal Mail',
+        insightDesc: 'Royal Mail Tracked 24',
+        rateKey:     'rm_t24',
+        rates: RATE_DATA.rm_t24,
+        notes: [
+          ['n',  '<strong>Proposed rate under negotiation</strong> &#8212; offer from Louis (Royal Mail). Door-to-door.'],
+          ['nw', 'Max weight approximately 2.75kg. Not suitable for heavier parcels.'],
+          ['n',  'Surcharges not yet confirmed as part of deal.']
+        ]
+      }
+    ],
+
+    extendedLabel: 'Tracked 48 / 24',
+    extended: 'notquoted',
+    extendedDimmed: true,
+
+    quotation: [
+      ['Quote Status',            'Proposed rate from Louis (Royal Mail) &#8212; under active negotiation. Not finalised.'],
+      ['Tracked 48 Proposed Rate','£2.50 per parcel (flat rate offer)'],
+      ['Tracked 24 Proposed Rate','£2.95 per parcel (flat rate offer)'],
+      ['Current Achieved Rate',   '£2.30 (0&#8211;2kg, 48hr, no surcharges). £3.60 (2&#8211;15kg).'],
+      ['Weight Limit',            'Approximately 2.75kg maximum &#8212; these rates do not cover the full parcel weight range'],
+      ['Our Position',            'Challenged the offer &#8212; noted £2.50 only covers orders up to ~2.75kg which does not represent full volume. Surcharges and signed-for fee (~£0.50) not yet confirmed.'],
+      ['Outstanding Items',       'Signed-for / door delivery fee TBC. Surcharge schedule not yet shared. Extended region rates not discussed.'],
+      ['Recommendation',          'Best suited as a complement for lightweight (&lt;2.75kg) volume only &#8212; not a full replacement for current carrier.']
+    ]
+  },
+
+  // ── EVRI ────────────────────────────────────────────────────────
+  evri: {
+    name:       'Evri (via MHI)',
+    rowClass:   'row-evri',
+    brandClass: 'brand-blue',
+    quotationTag: { text: 'Current Carrier', cls: 'green' },
+
+    standard: [
+      {
+        subLabel:    'Standard 48 &#8212; Product code: 48',
+        badge:       { text: 'Current Carrier', cls: 'b-current' },
+        calcLabel:   'Evri (MHI)',
+        insightDesc: 'Evri (via MHI)',
+        rateKey:     'evri_std',
+        rates: RATE_DATA.evri_std,
+        notes: [
+          ['n',  'Via MHI direct contract. Eff. 12 March 2026. Door-to-door delivery.'],
+          ['n',  'UK excl. H&amp;I. Max: 120cm length / 245cm length + girth.'],
+          ['nw', 'Collection surcharge: <strong>£50 per collection</strong> if volume falls below 140 parcels per pick-up.'],
+          ['nw', 'Significant price jump above 15kg.']
+        ]
+      }
+    ],
+
+    nextday: [
+      {
+        subLabel:    'Next Day &#8212; Product code: 24',
+        badge:       { text: 'Current Carrier', cls: 'b-current' },
+        calcLabel:   'Evri (MHI)',
+        insightDesc: 'Evri (via MHI)',
+        rateKey:     'evri_nd',
+        rates: RATE_DATA.evri_nd,
+        notes: [
+          ['n',  'UK domestic door-to-door. Max: 120cm length / 245cm length + girth.'],
+          ['nw', 'Collection surcharge: <strong>£50 per collection</strong> if volume below 140 parcels per pick-up.'],
+          ['nw', 'Significant price jump for 15kg+ parcels.']
+        ]
+      }
+    ],
+
+    extendedLabel: 'Standard 48',
+    extendedBadge: { text: 'Cheapest Extended', cls: 'b-current' },
+    extendedDimmed: false,
+    extended: {
+      highlands: { cls: 'ext-best', html: '<span class="ext-price">£6.85</span> <span class="ext-range">0&#8211;15kg</span><br><span class="ext-price">£9.00</span> <span class="ext-range">15&#8211;20kg</span><br><span class="ext-price">£10.35</span> <span class="ext-range">20&#8211;30kg</span>' },
+      nireland:  { cls: 'ext-best', html: '<span class="ext-price">£6.85</span> <span class="ext-range">0&#8211;15kg</span><br><span class="ext-price">£9.00</span> <span class="ext-range">15&#8211;20kg</span><br><span class="ext-price">£10.35</span> <span class="ext-range">20&#8211;30kg</span>' },
+      iom:       { cls: 'ext-best', html: '<span class="ext-price">£6.85</span> <span class="ext-range">0&#8211;15kg</span><br><span class="ext-price">£9.00</span> <span class="ext-range">15&#8211;20kg</span><br><span class="ext-price">£10.35</span> <span class="ext-range">20&#8211;30kg</span>' },
+      channel:   { cls: 'ext-best', html: '<span class="ext-price">£9.00</span> <span class="ext-range">0&#8211;20kg</span><br><span class="ext-price">£10.35</span> <span class="ext-range">20&#8211;30kg</span>' },
+      wight:     { cls: '',         html: '<span class="ext-price" style="color:var(--on-med)">Standard UK rate</span><div class="n">No surcharge. Billed at standard 48 rate.</div>' }
+    },
+
+    quotation: [
+      ['Quote Status',           'Agreed rate via MHI direct contract'],
+      ['Effective Date',         '12 March 2026'],
+      ['Contract Route',         'Via MHI (Master Handling Integrator) &#8212; direct contract, not retail Evri rates'],
+      ['Services Quoted',        'Standard 48 and Next Day 24, including extended regions (H&amp;I, NI, IoM, Channel Islands)'],
+      ['Standard 48 Rates',      '£2.35 (0&#8211;2kg) / £3.63 (2&#8211;15kg) / £8.90 (15&#8211;20kg) / £10.35 (20&#8211;30kg)'],
+      ['Next Day 24 Rates',      '£3.45 (0&#8211;2kg) / £4.08 (2&#8211;15kg) / £9.35 (15&#8211;20kg) / £11.40 (20&#8211;30kg)'],
+      ['Extended H&amp;I / NI / IoM', '£6.85 (0&#8211;15kg) / £9.00 (15&#8211;20kg) / £10.35 (20&#8211;30kg)'],
+      ['Channel Islands',        '£9.00 (0&#8211;20kg) / £10.35 (20&#8211;30kg)'],
+      ['Key Surcharges',         'Collection surcharge £50 if &lt;140 parcels per pick-up. Volumetric &gt;40L: £0.60. Relabelling: £0.96. Fuel included in all quoted rates.'],
+      ['Notes',                  'Max 120cm length. No separate fuel surcharge &#8212; included in quoted rates.']
+    ]
+  },
+
+  // ── DPD ─────────────────────────────────────────────────────────
+  dpd: {
+    name:       'DPD',
+    rowClass:   'row-dpd',
+    brandClass: 'brand-dpd',
+    quotationTag: { text: 'Revised Offer', cls: 'amber' },
+
+    standard: [],   // DPD is Next Day only for this account
+
+    nextday: [
+      {
+        subLabel:    'Flat Rate &#8212; Next Day',
+        badge:       { text: 'Revised Offer', cls: 'b-revised' },
+        calcLabel:   'DPD',
+        insightDesc: 'DPD (flat rate)',
+        rateKey:     'dpd_nd',
+        rates: RATE_DATA.dpd_nd,
+        notes: [
+          ['n',  'Flat rate offer &#8212; full volume basis. Up to 30kg per parcel.'],
+          ['n',  'Predict SMS &amp; email notifications included free. World-class NPS of 74.'],
+          ['nw', 'Volume commitment required. Timed upgrades (10:30, 12:00) available at premium.']
+        ]
+      }
+    ],
+
+    extendedLabel: 'Two Day Parcel',
+    extendedBadge: { text: 'Flat Rate Offer', cls: 'b-revised' },
+    extendedDimmed: false,
+    extended: {
+      highlands: { cls: 'ext-mid',  html: '<span class="ext-price">£10.98</span> <span class="ext-range">up to 30kg</span><div class="n">2&#8211;5 day delivery to Scottish Islands</div><div class="nw">Next Day not available to H&amp;I</div>' },
+      nireland:  { cls: 'ext-mid',  html: '<span class="ext-price">£10.98</span> <span class="ext-range">Two Day, up to 30kg</span><br><span class="ext-price">£24.41</span> <span class="ext-range">Next Day parcel</span><div class="nw">+£0.50 NI Clearance charge per parcel</div>' },
+      iom:       { cls: 'ext-mid',  html: '<span class="ext-price">£12.20</span> <span class="ext-range">up to 30kg</span><div class="n">Two Day only. Next Day not available.</div>' },
+      channel:   { cls: 'ext-high', html: '<span class="ext-price">£14.03</span> <span class="ext-range">up to 5kg (Two Day)</span><div class="nw">Consignment rate above 5kg &#8212; costs increase significantly</div><div class="n">Next Day not available</div>' },
+      wight:     { cls: '',         html: '<span class="ext-price" style="color:var(--on-med)">Standard UK rate</span><div class="n">No additional surcharge from DPD.</div>' }
+    },
+
+    quotation: [
+      ['Quote Status',           'Revised flat rate offer &#8212; response to challenge on original consignment-based pricing'],
+      ['Effective Date',         '2 March 2026 (original quote). Flat rate offer received subsequently.'],
+      ['Quotation Number',       '02750411 &#8212; prepared for Millenium Cash &amp; Carry T/A (The Bottle Club)'],
+      ['Account Number',         '670298'],
+      ['Revised Flat Rate Offer','£4.80 per parcel &#8212; based on full volume commitment'],
+      ['Original Next Day Rate', '£5.33 (first parcel) + £3.62 (subsequent parcels)'],
+      ['Service Type',           'Next Day only. DPD do not offer a 48hr / Two Day standard service for this account.'],
+      ['Services Available',     'Next Day, 10:30, 12:00, Saturday, Sunday. Ship-to-Shop at £4.50 (OOH locker alternative).'],
+      ['Trading Profile Basis',  '~1,000 parcels/week domestic + 24 offshore + 100 Expresspak. Rates are volume-dependent.'],
+      ['Payment Terms',          '30 day terms (nett monthly)'],
+      ['Collection Points',      'RM19 1NA, IG2 6HY, RM9 6FF, IG11 7TS, CM2 6TE, IG11 7SD, DA14 5RH'],
+      ['Key Surcharges',         'Congestion £0.95/shipment. Oversized £23.50/parcel. NI Clearance £0.50/parcel. Fuel variable (dpd.co.uk/fuel).'],
+      ['Complimentary Services', 'Predict SMS &amp; email notifications, all stationery, Ship@Ease system, proof of delivery &#8212; all free of charge.']
+    ]
+  },
+
+  // ── DHL ─────────────────────────────────────────────────────────
+  dhl: {
+    name:       'DHL eCommerce',
+    rowClass:   'row-dhl',
+    brandClass: 'brand-yellow',
+    quotationTag: null,
+
+    standard: [],   // DHL is Next Day only
+
+    nextday: [
+      {
+        subLabel:    'Standard + Timed Options (Zone A/B)',
+        badge:       null,
+        calcLabel:   'DHL',
+        insightDesc: 'DHL eCommerce',
+        rateKey:     'dhl_nd',
+        rates: RATE_DATA.dhl_nd,
+        notes: [
+          ['n',  'Base rate Zone A/B. 2nd+ parcels to same address: <strong>£3.50</strong>.'],
+          ['n',  'Timed add-ons: NWD by Noon <strong>+£2.50</strong> | NWD by 10:30 <strong>+£6.89</strong> | NWD by 9am <strong>+£9.54</strong>'],
+          ['n',  'Saturday available: standard <strong>+£7.42</strong> | by 10:30 <strong>+£12.19</strong> | by 9am <strong>+£15.90</strong>'],
+          ['nw', 'Congestion £0.75 + fuel surcharge apply on top of all rates.']
+        ]
+      }
+    ],
+
+    extendedLabel: 'Zone C / Zone D',
+    extendedBadge: null,
+    extendedDimmed: false,
+    extended: {
+      highlands: { cls: 'ext-mid',  html: '<span class="ext-price">£10.00</span> <span class="ext-range">first parcel (Zone C)</span><br><span class="ext-price">£8.00</span> <span class="ext-range">2nd+ parcels</span><div class="n">Up to 30kg per parcel</div>' },
+      nireland:  { cls: 'ext-mid',  html: '<span class="ext-price">£10.00</span> <span class="ext-range">first parcel (Zone C)</span><br><span class="ext-price">£8.00</span> <span class="ext-range">2nd+ parcels</span><div class="n">Up to 30kg per parcel</div>' },
+      iom:       { cls: 'ext-high', html: '<span class="ext-price">£15.00</span> <span class="ext-range">first parcel (Zone D)</span><br><span class="ext-price">£12.00</span> <span class="ext-range">2nd+ parcels</span>' },
+      channel:   { cls: 'ext-high', html: '<span class="ext-price">£15.00</span> <span class="ext-range">first parcel (Zone D)</span><br><span class="ext-price">£12.00</span> <span class="ext-range">2nd+ parcels</span>' },
+      wight:     { cls: 'ext-high', html: '<span class="ext-price">£4.90</span> <span class="ext-range">base (Zone A)</span><div class="nw"><strong>+£5.99 surcharge per shipment</strong><br>Effective total: £10.89</div>' }
+    },
+
+    quotation: [
+      ['Quote Status',            'Indicative rates received &#8212; for The Bottle Club'],
+      ['Zone Structure',          'Zone A: England &amp; Wales (standard). Zone B: Central Scotland. Zone C: H&amp;I, NI. Zone D: IoM, Guernsey, Jersey.'],
+      ['Zone A / B Rate (1st parcel)',  '£4.90 per parcel (up to 30kg)'],
+      ['Zone A / B Rate (2nd+ parcel)', '£3.50 per parcel &#8212; applies when multiple parcels sent to same address in same consignment'],
+      ['Zone C Rate (H&amp;I, NI)',     '£10.00 (1st parcel) / £8.00 (2nd+). Up to 30kg.'],
+      ['Zone D Rate (IoM, CI)',         '£15.00 (1st parcel) / £12.00 (2nd+). Up to 30kg.'],
+      ['Timed Add-ons',           'NWD by Noon +£2.50 / NWD by 10:30 +£6.89 / NWD by 9am +£9.54 / Saturday +£7.42 / Sat by 10:30 +£12.19 / Sat by 9am +£15.90'],
+      ['Key Surcharges',          'Congestion £0.75/shipment. Fuel variable. Isle of Wight/Scilly +£5.99. Heavy weight +£10&#8211;£40 (30&#8211;36kg+). Return to Sender £4.50.'],
+      ['Max Parcel Weight',       '30kg (standard). Heavy weight surcharges apply 30&#8211;36kg+.']
+    ]
+  }
+
+};
+
+// ════════════════════════════════════════════════════════════════════
+//  SURCHARGE-INCLUSIVE RATES
+//  Used when the "Inc. surcharges" toggle is ON.
+//  To remove: delete this block and the toggleSurcharges() function below,
+//  and remove the toggle HTML from the header.
+//
+//  What is included and how calculated:
+//    InPost     — base × 1.05 (5% fuel per agreed rates)
+//    Evri       — unchanged (fuel already in quoted rates; £50 collection
+//                 fee is volume-triggered, not per-parcel)
+//    Royal Mail — base × 1.11 (11% fuel, eff. 5 Jan 2026) + £0.05 green
+//                 surcharge (eff. 31 Mar 2025) + £0.50 signed-for (indicative)
+//    DPD        — base × 1.187 (18.7% fuel, eff. 16 Mar 2026)
+//                 congestion excluded — not applied to every shipment
+//    DHL        — base × 1.245 (24.5% fuel Apr 2026, up to 31.5kg) + £0.75
+//                 congestion (from Mar 2026 indicative rates)
+//
+//  Fuel surcharges are percentage-based and change regularly. Update these
+//  values when the carriers publish new rates.
+//  Last updated: March 2026
+// ════════════════════════════════════════════════════════════════════
+const SURCHARGE_DATA = {
+  // InPost standard — base × 1.05 (5% fuel per agreed rates)
+  inpost_inject:     { '0-2': 2.03, '2-3': 2.03, '3-15': 2.60, '15-20': 3.75, '20-30': 3.75 },
+  inpost_collect:    { '0-2': 2.28, '2-3': 2.28, '3-15': 2.86, '15-20': 4.00, '20-30': 4.00 },
+  // InPost next day — base × 1.05 (5% fuel)
+  inpost_nd_inject:  { '0-2': 3.03, '2-3': 3.03, '3-15': 3.33, '15-20': null, '20-30': null },
+  inpost_nd_collect: { '0-2': 3.29, '2-3': 3.29, '3-15': 3.58, '15-20': null, '20-30': null },
+  // Evri — unchanged; fuel already included in quoted rates
+  evri_std: { '0-2': 2.35, '2-3': 3.63, '3-15': 3.63, '15-20': 8.90,  '20-30': 10.35 },
+  evri_nd:  { '0-2': 3.45, '2-3': 4.08, '3-15': 4.08, '15-20': 9.35,  '20-30': 11.40 },
+  // Royal Mail — base × 1.11 fuel (11%) + £0.05 green + £0.50 signed-for (indicative)
+  // T48: 2.50 × 1.11 = 2.775 + 0.05 green + 0.50 sigfor = 3.325 → £3.33
+  // T24: 2.95 × 1.11 = 3.2745 + 0.05 green + 0.50 sigfor = 3.8245 → £3.82
+  rm_t48: { '0-2': 3.33, '2-3': 3.33, '3-15': null, '15-20': null, '20-30': null },
+  rm_t24: { '0-2': 3.82, '2-3': 3.82, '3-15': null, '15-20': null, '20-30': null },
+  // DPD — base × 1.187 (18.7% fuel, eff. 16 Mar 2026) — congestion excluded (not on every shipment)
+  // 4.80 × 1.187 = 5.6976 → £5.70
+  dpd_nd: { '0-2': 5.70, '2-3': 5.70, '3-15': 5.70, '15-20': 5.70, '20-30': 5.70 },
+  // DHL — base × 1.245 (24.5% fuel, Apr 2026, up to 31.5kg) + £0.75 congestion (quotation)
+  // 0-2kg: 4.80+1.18+0.75=6.73  |  2kg+: 4.90+1.20+0.75=6.85
+  dhl_nd: { '0-2': 6.73, '2-3': 6.85, '3-15': 6.85, '15-20': 6.85, '20-30': 6.85 },
+};
+
+// ── Surcharge toggle state ────────────────────────────────────────
+let surchargesEnabled = false;
+
+// Returns the rate object to use for a service, respecting the toggle
+function getEffectiveRates(svc) {
+  if (surchargesEnabled && svc.rateKey && SURCHARGE_DATA[svc.rateKey]) {
+    return SURCHARGE_DATA[svc.rateKey];
+  }
+  return svc.rates;
+}
+
+// ── Toggle handler ────────────────────────────────────────────────
+function toggleSurcharges(enabled) {
+  surchargesEnabled = enabled;
+
+  // Show/hide the explanation banner
+  document.getElementById('surcharge-banner').classList.toggle('visible', enabled);
+
+  // Re-render all dynamic tables and insight cards
+  renderInsightCards('std-insights', 'standard');
+  renderRateTable('std-table', 'standard');
+  renderInsightCards('nd-insights', 'nextday');
+  renderRateTable('nd-table', 'nextday');
+
+  // Re-apply colour coding (reset to "all weights" view on toggle)
+  colorCode(document.getElementById('std-table'), null);
+  colorCode(document.getElementById('nd-table'),  null);
+
+  // Reset weight filter buttons to "All Weights" so sort matches displayed data
+  document.querySelectorAll('.weight-filter .wbtn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.weight-filter .wbtn:first-of-type').forEach(b => b.classList.add('active'));
+  document.querySelectorAll('[data-w]').forEach(el => { el.style.display = ''; });
+}
+
+
+// ── RENDERING ORDER (change to reorder rows in each view) ───────────
+const STD_ORDER  = ['inpost', 'evri', 'royalmail'];
+const ND_ORDER   = ['inpost', 'royalmail', 'evri', 'dpd', 'dhl'];
+const EXT_ORDER  = ['evri', 'dpd', 'dhl', 'inpost', 'royalmail'];
+const QUOT_ORDER = ['evri', 'dpd', 'dhl', 'inpost', 'royalmail'];
+const BANDS      = ['0-2', '2-3', '3-15', '15-20', '20-30'];
+const EXT_REGIONS = ['highlands', 'nireland', 'iom', 'channel', 'wight'];
+
+
+// ── RENDER: INSIGHT CARDS ─────────────────────────────────────────
+function renderInsightCards(containerId, serviceType) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const order = serviceType === 'standard' ? STD_ORDER : ND_ORDER;
+
+  container.innerHTML = BANDS.map(band => {
+    let minPrice = Infinity, minDesc = '', minBrand = '';
+    order.forEach(id => {
+      const c = COURIER_DATA[id];
+      const services = serviceType === 'standard' ? c.standard : c.nextday;
+      services.forEach(svc => {
+        const r = getEffectiveRates(svc)[band];
+        if (r !== null && r !== undefined && r < minPrice) {
+          minPrice = r;
+          minDesc  = svc.insightDesc;
+          minBrand = c.brandClass || '';
+        }
+      });
+    });
+    const label = band === '0-2'   ? 'Cheapest 0&#8211;2kg'
+                : band === '2-3'   ? 'Cheapest 2&#8211;3kg'
+                : band === '3-15'  ? 'Cheapest 3&#8211;15kg'
+                : band === '15-20' ? 'Cheapest 15&#8211;20kg'
+                :                    'Cheapest 20&#8211;30kg';
+    return `<div class="ic ${minBrand}">
+      <div class="ic-label">${label}</div>
+      <div class="ic-val">&#163;${minPrice.toFixed(2)}</div>
+      <div class="ic-desc">${minDesc}</div>
+    </div>`;
+  }).join('');
+}
+
+
+// ── RENDER: RATE TABLE ROWS ───────────────────────────────────────
+function renderRateTable(tableId, serviceType) {
+  const tbody = document.querySelector('#' + tableId + ' tbody');
+  if (!tbody) return;
+  const order = serviceType === 'standard' ? STD_ORDER : ND_ORDER;
+
+  tbody.innerHTML = order.map(id => {
+    const c = COURIER_DATA[id];
+    const services = serviceType === 'standard' ? c.standard : c.nextday;
+    return services.map(svc => {
+      const effectiveRates = getEffectiveRates(svc);
+      const cells = BANDS.map(band => {
+        const r = effectiveRates[band];
+        if (r === null || r === undefined) {
+          return `<td class="na" data-w="${band}" data-p="999">N/A<br><span style="font-size:11px">Weight limit</span></td>`;
+        }
+        return `<td class="wval" data-w="${band}" data-p="${r}">&#163;${r.toFixed(2)}</td>`;
+      }).join('');
+      const badgeHtml = svc.badge
+        ? `<span class="badge ${svc.badge.cls}">${svc.badge.text}</span>`
+        : '';
+      const notesHtml = svc.notes.map(([cls, txt]) => `<div class="${cls}">${txt}</div>`).join('');
+      return `<tr class="${c.rowClass}">
+        <td>
+          <div class="cname">${c.name}</div>
+          <div class="csvc">${svc.subLabel}</div>
+          ${badgeHtml}
+        </td>
+        ${cells}
+        <td>${notesHtml}</td>
+      </tr>`;
+    }).join('');
+  }).join('');
+}
+
+
+// ── RENDER: EXTENDED SERVICES TABLE ──────────────────────────────
+function renderExtendedTable() {
+  const tbody = document.querySelector('#extended-table tbody');
+  if (!tbody) return;
+
+  tbody.innerHTML = EXT_ORDER.map(id => {
+    const c = COURIER_DATA[id];
+    const ext = c.extended;
+    const dimStyle = c.extendedDimmed ? 'opacity:0.6' : '';
+
+    const badge = c.extendedBadge
+      ? `<span class="badge ${c.extendedBadge.cls}">${c.extendedBadge.text}</span>`
+      : '';
+
+    const regionCells = EXT_REGIONS.map(region => {
+      if (!ext) return `<td class="na">Not available</td>`;
+      if (ext === 'notquoted') return `<td class="na">Not quoted</td>`;
+      const rd = ext[region];
+      return `<td class="${rd.cls}">${rd.html}</td>`;
+    }).join('');
+
+    return `<tr style="${dimStyle}">
+      <td>
+        <div class="cname">${c.name}</div>
+        <div class="csvc">${c.extendedLabel || ''}</div>
+        ${badge}
+      </td>
+      ${regionCells}
+    </tr>`;
+  }).join('');
+}
+
+
+// ── RENDER: QUOTATION DETAILS ────────────────────────────────────
+function renderQuotationDetails() {
+  const container = document.getElementById('quotation-cards');
+  if (!container) return;
+
+  container.innerHTML = QUOT_ORDER.map(id => {
+    const c = COURIER_DATA[id];
+    const tagHtml = c.quotationTag
+      ? `<span class="qd-tag ${c.quotationTag.cls}">${c.quotationTag.text}</span>`
+      : '';
+    const rows = c.quotation.map(([label, val]) =>
+      `<div class="qd-row"><div class="qd-label">${label}</div><div class="qd-val">${val}</div></div>`
+    ).join('');
+    return `<div class="qd-card"><h3>${c.name} ${tagHtml}</h3>${rows}</div>`;
+  }).join('');
+}
+
+
+// ── GET RATES FOR CALCULATOR (derived from COURIER_DATA) ─────────
+function getCalcRates(serviceType) {
+  const result = {};
+  const order = serviceType === 'standard' ? STD_ORDER : ND_ORDER;
+  order.forEach(id => {
+    const c = COURIER_DATA[id];
+    const services = serviceType === 'standard' ? c.standard : c.nextday;
+    services.forEach(svc => {
+      result[svc.calcLabel] = getEffectiveRates(svc);
+    });
+  });
+  return result;
+}
+
+
+// ── TAB SWITCHING ─────────────────────────────────────────────────
+function showTab(tabName, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+
+// ── WEIGHT FILTER ─────────────────────────────────────────────────
+function filterW(prefix, weight, btn) {
+  const tableId = prefix === 'std' ? 'std-table' : 'nd-table';
+  const table   = document.getElementById(tableId);
+  btn.closest('.weight-filter').querySelectorAll('.wbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  if (weight === 'all') {
+    table.querySelectorAll('[data-w]').forEach(el => { el.style.display = ''; });
+    table.querySelectorAll('th[data-w]').forEach(th => th.classList.remove('active-wcol'));
+    table.querySelectorAll('th:last-child, td:last-child').forEach(el => { el.style.display = ''; });
+    colorCode(table, null);
+    return;
+  }
+
+  table.querySelectorAll('th[data-w]').forEach(th => {
+    th.style.display = th.dataset.w === weight ? '' : 'none';
+    th.classList.toggle('active-wcol', th.dataset.w === weight);
+  });
+  table.querySelectorAll('td[data-w]').forEach(td => {
+    td.style.display = td.dataset.w === weight ? '' : 'none';
+  });
+
+  const tbody = table.querySelector('tbody');
+  const rows  = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a, b) => {
+    const aCell = a.querySelector('td[data-w="' + weight + '"]');
+    const bCell = b.querySelector('td[data-w="' + weight + '"]');
+    return (parseFloat(aCell ? aCell.dataset.p : 999) || 999) -
+           (parseFloat(bCell ? bCell.dataset.p : 999) || 999);
+  });
+  rows.forEach(r => tbody.appendChild(r));
+  colorCode(table, weight);
+}
+
+
+// ── COLOR CODING ──────────────────────────────────────────────────
+function colorCode(table, activeWeight) {
+  const weights = activeWeight ? [activeWeight] : BANDS;
+  weights.forEach(w => {
+    const cells = Array.from(table.querySelectorAll('td[data-w="' + w + '"]'));
+    const valid = cells.filter(c => parseFloat(c.dataset.p) < 999);
+    if (!valid.length) return;
+    const prices = valid.map(c => parseFloat(c.dataset.p));
+    const sorted = [...new Set(prices)].sort((a, b) => a - b);
+    const min = sorted[0], second = sorted[1];
+    valid.forEach(cell => {
+      cell.classList.remove('best', 'good', 'mid', 'high', 'wval');
+      const p = parseFloat(cell.dataset.p);
+      if (p === min)                   cell.classList.add('best');
+      else if (p === second)           cell.classList.add('good');
+      else if (p === Math.max(...prices)) cell.classList.add('high');
+      else                             cell.classList.add('mid');
+    });
+    cells.filter(c => parseFloat(c.dataset.p) >= 999).forEach(c => c.classList.add('na'));
+  });
+}
+
+
+// ── CALCULATOR ────────────────────────────────────────────────────
+function runCalc(tab) {
+  const isStd  = tab === 'standard';
+  const count  = parseInt(document.getElementById(isStd ? 's-count'  : 'nd-count').value)  || 0;
+  const weight = document.getElementById(isStd ? 's-weight' : 'nd-weight').value;
+  const data   = getCalcRates(tab);
+  const outEl  = document.getElementById(isStd ? 's-calc-out' : 'nd-calc-out');
+  if (!count) { outEl.innerHTML = ''; return; }
+
+  const results = Object.entries(data).map(([carrier, prices]) => ({
+    carrier, price: prices[weight]
+  })).sort((a, b) => (a.price || 999) - (b.price || 999));
+
+  const minP = results.find(r => r.price !== null && r.price !== undefined)?.price || 0;
+
+  outEl.innerHTML = results.map((r, i) => {
+    if (r.price === null || r.price === undefined) {
+      return `<div class="cr-item">
+        <div class="cr-carrier">${r.carrier}</div>
+        <div class="cr-na">Not available for this weight</div>
+      </div>`;
+    }
+    const weekly  = (r.price * count).toFixed(2);
+    const monthly = (r.price * count * 4.33).toFixed(2);
+    const annual  = (r.price * count * 52).toFixed(2);
+    return `<div class="cr-item ${i === 0 ? 'best-calc' : ''}">
+      <div class="cr-carrier">${i === 0 ? '&#127949; ' : ''}${r.carrier} @ &#163;${r.price.toFixed(2)}</div>
+      <div class="cr-weekly">&#163;${weekly}<span style="font-size:12px;font-weight:400;color:var(--on-med)">/week</span></div>
+      <div class="cr-annual">&#163;${monthly}/month &bull; &#163;${annual}/year</div>
+    </div>`;
+  }).join('');
+}
+
+
+// ── INIT ──────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  renderInsightCards('std-insights', 'standard');
+  renderRateTable('std-table',  'standard');
+  renderInsightCards('nd-insights', 'nextday');
+  renderRateTable('nd-table',   'nextday');
+  renderExtendedTable();
+  renderQuotationDetails();
+  colorCode(document.getElementById('std-table'), null);
+  colorCode(document.getElementById('nd-table'),  null);
+});
+
+</script>
+</body>
+</html>
