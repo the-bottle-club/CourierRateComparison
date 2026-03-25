@@ -19,13 +19,13 @@
 
 ## Standard Rates (Zone A / B — England, Wales, Central Scotland)
 
-| HTML Weight Band | 1st Parcel | 2nd+ Parcels (same address, same consignment) |
+| HTML Weight Band | 1st Parcel |
 |-----------------|------------|------------------------------------------------|
-| 0–2kg | £4.80 | £3.50 |
-| 2–3kg | £4.80 | £3.50 |
-| 3–15kg | £4.80 | £3.50 |
-| 15–20kg | £4.80 | £3.50 |
-| 20–30kg | £4.80 | £3.50 |
+| 0–2kg | £4.60 |
+| 2–3kg | £4.60 |
+| 3–15kg | £4.60 |
+| 15–20kg | £4.60 |
+| 20–30kg | £4.60 |
 
 Flat rate regardless of weight band (up to 30kg).
 
@@ -35,9 +35,9 @@ Flat rate regardless of weight band (up to 30kg).
 
 | Region | Postcodes | 1st Parcel | 2nd+ Parcels | Notes |
 |--------|-----------|------------|--------------|-------|
-| Highlands & Islands / Northern Ireland | Zone C | £10.00 | £8.00 | Up to 30kg per parcel |
-| Isle of Man / Channel Islands | Zone D | £15.00 | £12.00 | Up to 30kg per parcel |
-| Isle of Wight & Scilly | PO30–41, TR21–25 | £4.90 + £5.99 surcharge = £10.89 | — | Zone A base + surcharge |
+| Highlands & Islands / Northern Ireland | Zone C | £12.00 | Up to 30kg per parcel |
+| Isle of Man / Channel Islands | Zone D | £15.00 | Up to 30kg per parcel |
+| Isle of Wight & Scilly | PO30–41, TR21–25 | £4.60 + £5.99 surcharge = £10.59 | — | Zone A base + surcharge |
 
 ---
 
