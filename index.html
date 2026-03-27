@@ -453,7 +453,7 @@
           <td class="s-val"><div class="sv">11%</div><div class="sn">Eff. 5 Jan 2026. Applies to Tracked 24 &amp; 48 contract customers. Check royalmail.com/business/mail/surcharges</div></td>
           <td style="padding:11px 16px;color:var(--on-med);font-size:12.5px">Included in quoted rates</td>
           <td class="s-val"><div class="sv">18.7%</div><div class="sn">Eff. 16 Mar 2026. Applied per shipment. Check dpd.co.uk/fuel for current rate</div></td>
-          <td class="s-val"><div class="sv">24.5%</div><div class="sn">Apr 2026 (up to 31.5kg). Indexed monthly. Check dhl.com fuel surcharge page</div></td>
+          <td class="s-val"><div class="sv">15.25%</div><div class="sn">Apr 2026 (up to 31.5kg). Indexed monthly. Check dhl.com fuel surcharge page</div></td>
         </tr>
         <tr>
           <td><strong>Congestion</strong></td>
@@ -637,11 +637,11 @@
     <h4>Key Surcharge Risks to Note</h4>
     <ul style="padding-left:20px">
       <li>DPD fuel &amp; energy is currently <strong>18.7%</strong> (eff. 16 March 2026) &#8212; applied as a percentage of the base rate per shipment. This changes regularly; check dpd.co.uk/fuel before finalising any cost models.</li>
-      <li>DHL fuel &amp; road is currently <strong>24.5%</strong> (April 2026, up to 31.5kg) &#8212; indexed monthly to Polish diesel prices and applied on top of base rates. This is the highest fuel surcharge of all carriers reviewed at this time.</li>
+      <li>DHL fuel &amp; road is currently <strong>15.25%</strong> (April 2026, up to 31.5kg) &#8212; indexed monthly to Polish diesel prices and applied on top of base rates.</li>
       <li>Royal Mail applies <strong>both an 11% fuel surcharge</strong> (eff. 5 Jan 2026) and a <strong>5p green surcharge per item</strong> (eff. 31 Mar 2025) to Tracked 24 &amp; 48 contract customers. Neither has been confirmed as part of the current deal negotiation, but both are standard for contract accounts.</li>
       <li>Evri's <strong>£50 collection surcharge</strong> fires automatically if volume drops below 140 parcels per collection. In periods of lower volume this could be a significant unexpected cost.</li>
       <li>InPost currently has the <strong>cleanest surcharge profile</strong> &#8212; just 5% fuel on top of the agreed rates. No congestion or green levy.</li>
-      <li>DPD congestion charge of <strong>£0.95 per shipment</strong> is higher than DHL's £0.75 &#8212; relevant at scale &#8212; but DHL's fuel percentage (24.5%) is currently significantly higher than DPD's (18.7%).</li>
+      <li>DPD congestion charge of <strong>£0.95 per shipment</strong> is higher than DHL's £0.75 &#8212; both are exception charges applied in specific circumstances, not on every shipment.</li>
     </ul>
   </div>
 </div>
@@ -1060,10 +1060,10 @@ const COURIER_DATA = {
 //                 fee is volume-triggered, not per-parcel)
 //    Royal Mail — base × 1.11 (11% fuel, eff. 5 Jan 2026) + £0.05 green
 //                 surcharge (eff. 31 Mar 2025) + £0.50 signed-for (indicative)
-//    DPD        — base × 1.187 (18.7% fuel, eff. 16 Mar 2026)
+//    DPD        — base × 1.187 (18.7% fuel, eff. 16 Mar 2026) + £0.20 carriage
 //                 congestion excluded — not applied to every shipment
-//    DHL        — base × 1.245 (24.5% fuel Apr 2026, up to 31.5kg) + £0.75
-//                 congestion (from Mar 2026 indicative rates)
+//    DHL        — base × 1.1525 (15.25% fuel Apr 2026, up to 31.5kg)
+//                 congestion excluded — exception charge, not on every shipment
 //
 //  Fuel surcharges are percentage-based and change regularly. Update these
 //  values when the carriers publish new rates.
@@ -1084,12 +1084,12 @@ const SURCHARGE_DATA = {
   // T24: 2.95 × 1.11 = 3.2745 + 0.05 green + 0.50 sigfor = 3.8245 → £3.82
   rm_t48: { '0-2': 3.33, '2-3': 3.33, '3-15': null, '15-20': null, '20-30': null },
   rm_t24: { '0-2': 3.82, '2-3': 3.82, '3-15': null, '15-20': null, '20-30': null },
-  // DPD — base × 1.187 (18.7% fuel, eff. 16 Mar 2026) — congestion excluded (not on every shipment)
-  // 4.80 × 1.187 = 5.6976 → £5.70
-  dpd_nd: { '0-2': 5.70, '2-3': 5.70, '3-15': 5.70, '15-20': 5.70, '20-30': 5.70 },
-  // DHL — base × 1.245 (24.5% fuel, Apr 2026, up to 31.5kg) + £0.75 congestion (quotation)
-  // 0-2kg: 4.80+1.18+0.75=6.73  |  2kg+: 4.90+1.20+0.75=6.85
-  dhl_nd: { '0-2': 6.73, '2-3': 6.85, '3-15': 6.85, '15-20': 6.85, '20-30': 6.85 },
+  // DPD — base × 1.187 (18.7% fuel, eff. 16 Mar 2026) + £0.20 carriage — congestion excluded (not on every shipment)
+  // 4.80 × 1.187 = 5.6976 + 0.20 carriage = £5.90
+  dpd_nd: { '0-2': 5.90, '2-3': 5.90, '3-15': 5.90, '15-20': 5.90, '20-30': 5.90 },
+  // DHL — base × 1.1525 (15.25% fuel, Apr 2026) — congestion excluded (exception charge, not on every shipment)
+  // All bands: 4.65 × 1.1525 = £5.36
+  dhl_nd: { '0-2': 5.36, '2-3': 5.36, '3-15': 5.36, '15-20': 5.36, '20-30': 5.36 },
 };
 
 // ── Surcharge toggle state ────────────────────────────────────────

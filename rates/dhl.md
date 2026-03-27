@@ -87,16 +87,15 @@ The figures below were taken from the DHL indicative rates document (March 2026)
 
 ## Surcharge-Inclusive Rates (for toggle)
 
-Applying fuel 24.5% (April 2026, up to 31.5kg) + congestion £0.75 (from Mar 2026 indicative rates).
-Note: courier-data.js shows 0–2kg base as £4.80 (not £4.90 as shown in the Standard Rates table above — minor discrepancy in source documents; £4.80 used in toggle calc for 0–2kg).
+Applying fuel 15.25% (April 2026, up to 31.5kg). Congestion (£0.75) excluded — exception charge, not applied to every shipment. Shown in the Surcharges table only.
 
-| HTML Weight Band | Base (1st parcel) | + Fuel 24.5% | + Congestion £0.75 | Total |
-|-----------------|-------------------|--------------|--------------------|-------|
-| 0–2kg | £4.80 | £1.18 | £0.75 | **£6.73** |
-| 2–3kg | £4.90 | £1.20 | £0.75 | **£6.85** |
-| 3–15kg | £4.90 | £1.20 | £0.75 | **£6.85** |
-| 15–20kg | £4.90 | £1.20 | £0.75 | **£6.85** |
-| 20–30kg | £4.90 | £1.20 | £0.75 | **£6.85** |
+| HTML Weight Band | Base (1st parcel) | + Fuel 15.25% | Total |
+|-----------------|-------------------|---------------|-------|
+| 0–2kg | £4.65 | £0.71 | **£5.36** |
+| 2–3kg | £4.65 | £0.71 | **£5.36** |
+| 3–15kg | £4.65 | £0.71 | **£5.36** |
+| 15–20kg | £4.65 | £0.71 | **£5.36** |
+| 20–30kg | £4.65 | £0.71 | **£5.36** |
 
 Note: Fuel surcharge changes monthly — check https://www.dhl.com/pl-en/ecommerce/business-customers/customer-services/fuel-surcharge.html (Polish index) and confirm with DHL account manager for UK rate. Update SURCHARGE_DATA in the HTML when the rate changes.
-Last calculated: April 2026 (fuel at 24.5%).
+Last calculated: March 2026 (fuel at 15.25%).
