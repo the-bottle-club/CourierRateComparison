@@ -21,11 +21,11 @@
 
 | HTML Weight Band | 1st Parcel |
 |-----------------|------------|------------------------------------------------|
-| 0–2kg | £4.60 |
-| 2–3kg | £4.60 |
-| 3–15kg | £4.60 |
-| 15–20kg | £4.60 |
-| 20–30kg | £4.60 |
+| 0–2kg | £4.65 |
+| 2–3kg | £4.65 |
+| 3–15kg | £4.65 |
+| 15–20kg | £4.65 |
+| 20–30kg | £4.65 |
 
 Flat rate regardless of weight band (up to 30kg).
 
@@ -66,7 +66,7 @@ The figures below were taken from the DHL indicative rates document (March 2026)
 | Surcharge | Amount | Notes |
 |-----------|--------|-------|
 | Congestion | £0.75 per shipment (as quoted Mar 2026) | Applied to all shipments. Verify current rate with DHL account manager. |
-| Fuel & Road | **24.5%** of base rate (April 2026, up to 31.5kg) | Indexed monthly to Polish diesel (Orlen S.A.). Changes on the 1st of each month. Check https://www.dhl.com/pl-en/ecommerce/business-customers/customer-services/fuel-surcharge.html — note this is the Polish index page; confirm with DHL account manager for UK-specific rate. |
+| Fuel & Road | **15.25%** of base rate (April 2026, up to 31.5kg) | Indexed monthly to Polish diesel (Orlen S.A.). Changes on the 1st of each month. Check https://www.dhl.com/pl-en/ecommerce/business-customers/customer-services/fuel-surcharge.html — note this is the Polish index page; confirm with DHL account manager for UK-specific rate. |
 | Isle of Wight / Scilly Isles | +£5.99 per shipment | PO30–PO41, TR21–TR25 |
 | Return to Sender | £4.50 per shipment | |
 

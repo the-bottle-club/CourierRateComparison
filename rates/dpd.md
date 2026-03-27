@@ -87,15 +87,16 @@ Predict SMS & email notifications, all stationery, Ship@Ease system, proof of de
 ## Surcharge-Inclusive Rates (for toggle)
 
 Applying fuel 18.7% (eff. 16 Mar 2026) only. Congestion (£0.95) excluded — not applied to every shipment.
-Fuel = 4.80 × 0.187 = £0.8976 ≈ £0.90. Total surcharge per parcel = £0.90.
+Fuel = 4.80 × 0.187 = £0.8976 ≈ £0.90. 
+Carriage = 0.20. Total surcharge per parcel = £1.10
 
-| HTML Weight Band | Base | + Fuel 18.7% | Total |
+| HTML Weight Band | Base | + Fuel 18.7% | £0.20 Carriage | Total |
 |-----------------|------|--------------|-------|
-| 0–2kg | £4.80 | £0.90 | **£5.70** |
-| 2–3kg | £4.80 | £0.90 | **£5.70** |
-| 3–15kg | £4.80 | £0.90 | **£5.70** |
-| 15–20kg | £4.80 | £0.90 | **£5.70** |
-| 20–30kg | £4.80 | £0.90 | **£5.70** |
+| 0–2kg | £4.80 | £0.90 | £0.20 | **£5.90** |
+| 2–3kg | £4.80 | £0.90 | £0.20 | **£5.90** |
+| 3–15kg | £4.80 | £0.90 | £0.20 | **£5.90** |
+| 15–20kg | £4.80 | £0.90 | £0.20 | **£5.90** |
+| 20–30kg | £4.80 | £0.90 | £0.20 | **£5.90** |
 
 Note: Fuel surcharge changes regularly — check https://www.dpd.co.uk/content/my_dpd/fuel_surcharge.jsp and update the SURCHARGE_DATA block in the HTML accordingly.
 Last calculated: March 2026 (fuel at 18.7%).
